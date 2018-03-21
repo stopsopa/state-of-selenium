@@ -4,3 +4,5 @@ selenium-server-standalone-3.4.0.jar
 hubConfig.json
 /.idea/
 node_modules
+*.zip
+wget-log*

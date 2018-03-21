@@ -16,7 +16,7 @@ fi
 
 echo "stopping hub & node"
 
-kill -9 $(ps aux | grep -v grep | grep selenium | grep -v $$ | awk '{print $2}')
+kill -9 $(ps aux | grep -v grep | grep selenium | grep -v $$ | grep -v ".sh" | awk '{print $2}')
 
 echo 'double check:'
 ps aux | grep -v grep | grep selenium | grep -v $$
@@ -29,8 +29,27 @@ if [ "$1" != "stop" ]; then
 #        curl -O https://raw.githubusercontent.com/stopsopa/research-protractor/master/mac/chromedriver
         curl -O https://raw.githubusercontent.com/stopsopa/research-protractor/master/selenium-server-standalone-3.4.0.jar
 
-        chmod a+x chromedriver
-        chmod a+x geckodriver
+#        chmod a+x chromedriver
+#        chmod a+x geckodriver
+    fi
+
+    if [ ! -f chromedriver ]; then
+
+        RUN="wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_mac64.zip"
+        echo -e "\n\n >> $RUN\n\n";
+        $RUN
+
+        RUN="unzip chromedriver_mac64.zip"
+        echo -e "\n\n >> $RUN\n\n";
+        $RUN
+
+        RUN="rm -rf chromedriver_mac64.zip"
+        echo -e "\n\n >> $RUN\n\n";
+        $RUN
+
+        RUN="chmod a+x chromedriver"
+        echo -e "\n\n >> $RUN\n\n";
+        $RUN
     fi
 
 # https://seleniumhq.github.io/docs/grid.html
