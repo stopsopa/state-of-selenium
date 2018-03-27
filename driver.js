@@ -131,6 +131,51 @@ module.exports = (async function () {
         return driver.get(url, ...rest);
     }
 
+    driver.waitInterval = async (condition, timeout = 0, interval = 300, message = undefined) => new Promise((resolve, reject) => {
+
+        let
+            inthan,
+            resolved = false,
+            timeoutHandler = e => {
+
+                resolved = true;
+
+                clearInterval(inthan);
+
+                reject(e || {
+                    name: "TimeoutError",
+                    remoteStacktrace: "",
+                    origin: 'driver.waitInterval'
+                });
+
+            }
+        ;
+
+        inthan = setTimeout(timeoutHandler, timeout);
+
+        (function again() {
+
+            if ( ! resolved ) {
+
+                driver.wait(condition, 1, message)
+                    .then(
+                        resolve,
+                        e => {
+
+                            if (e.name === 'TimeoutError') {
+
+                                return setTimeout(again, interval);
+                            }
+
+                            timeoutHandler(e)
+                        }
+                    )
+                ;
+            }
+
+        }());
+    });
+
     return driver;
 })();
 

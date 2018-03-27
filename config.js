@@ -3,7 +3,7 @@ module.exports = {
     width: 1024,
     height: 768,
     hub: {
-        host: "localhost",
+        host: "localhost", // http://localhost:4445/grid/console?config=true&configDebug=true&refresh=10
         port: 4445 // def 4444
     },
     node: {
@@ -14,7 +14,7 @@ module.exports = {
     curlTestMaxTime: 1, // sec
 
 
-    testServer: {
+    testServer: { // yarn server
         host: 'localhost',
         port: 4447
     }

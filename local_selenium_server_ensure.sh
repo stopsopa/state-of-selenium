@@ -51,7 +51,7 @@ if [ "$1" = "" ]; then
     /bin/bash local_selenium_server_ensure.sh don-t-restart
 else
 
-    echo -e "\n\n    Test after attempt to restart failed anyway - please check it manually, i give up :/ \n\n"
+    echo -e "\n\n    Test failed anyway after attempt to restart - please check it manually, I give up :/ \n\n"
 
 fi
 

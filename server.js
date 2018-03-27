@@ -1,4 +1,8 @@
-
+/**
+ * @author Szymon Działowski
+ * @date 2018-03-15
+ * @license MIT
+ */
 var http        = require('http');
 
 var path        = require('path');
@@ -482,6 +486,7 @@ else {
         jpg     : 'image/jpeg',
         png     : 'image/png',
         pdf     : 'application/pdf',
+        ico     : 'image/x-icon',
     }))));
 
     function time() {

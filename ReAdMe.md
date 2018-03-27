@@ -12,7 +12,11 @@ to stop selenium server
     
 to run selenium server
 
-    make sel        
+    make sel 
+    
+# setup file:
+
+    config.js           
 
 # api (native WebDriver ):
 

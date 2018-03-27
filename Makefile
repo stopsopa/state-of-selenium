@@ -8,3 +8,9 @@ selenium-start:
 
 selenium-stop:
 	/bin/bash local_selenium_server.sh stop
+
+help:
+	/bin/bash test.sh --help
+
+test-server:
+	yarn server
