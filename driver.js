@@ -110,6 +110,30 @@ module.exports = (async function () {
 
     driver.config = config;
 
+    /**
+     * This method seems to provide page after DOMContentLoaded was triggered.
+     *
+     * documentation of driver.get says:
+     *
+     *      "A promise that will be resolved when the document has finished loading"
+     *
+     *      from :
+     *          http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_WebDriver.html#get
+     *          https://imgur.com/ANmE9wb
+     *
+     *      to test run:
+     *
+     *          await driver.getTestServer('/003-own-js-check-async/index.html');
+     *
+     *          let div = await driver.findElement(By.js(() => {
+     *              return document.querySelector('#DOMContentLoaded');
+     *          }));
+     *
+     expect(await div.getText()).toBe('test dom');
+     * @param path
+     * @param rest
+     * @returns {*}
+     */
     driver.getTestServer = (path, ...rest) => {
 
         if (/^https?:\/\//.test(path)) {
