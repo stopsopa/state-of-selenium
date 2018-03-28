@@ -154,7 +154,26 @@ module.exports = (async function () {
 
         return driver.get(url, ...rest);
     }
+    driver.getProjectServer = (path, ...rest) => {
 
+        if (/^https?:\/\//.test(path)) {
+
+            return old(path, ...rest);
+        }
+
+        let url = `http://${config.projectServer.host}`;
+
+        if (config.projectServer.port != 80) {
+
+            url += ':' + config.projectServer.port;
+        }
+
+        url += path;
+
+        console.log('getTestServer: ', url);
+
+        return driver.get(url, ...rest);
+    }
     driver.waitInterval = async (condition, timeout = 0, interval = 300, message = undefined) => new Promise((resolve, reject) => {
 
         let
@@ -199,6 +218,25 @@ module.exports = (async function () {
 
         }());
     });
+
+    driver.getPathname = () => driver.executeScript(function () {
+        return location.pathname + location.search;
+    });
+
+    driver.getStatus = () => driver.executeScript(function () {
+        return window.responsestatuscode;
+    });
+
+    driver.testStatus = async (status = 200) => {
+
+        expect(await driver.getStatus()).toBe(status);
+
+        return driver;
+    }
+
+    driver.waitForElement = (fn, timeout = 0, interval = 300, message = undefined) =>
+        driver.waitInterval(until.elementLocated(By.js(fn)), timeout, interval, message)
+    ;
 
     return driver;
 })();

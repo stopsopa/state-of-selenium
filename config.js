@@ -13,6 +13,10 @@ module.exports = {
     waitToRunSeleniumCluster: 8, // sec
     curlTestMaxTime: 1, // sec
 
+    projectServer: { // yarn server
+        host: 'localhost',
+        port: 93
+    },
 
     testServer: { // yarn server
         host: 'localhost',

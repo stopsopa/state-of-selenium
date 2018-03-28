@@ -28,5 +28,16 @@ echo -e "\n ┌─────────────────────�
 echo -e " │ sequence of checking || running local selenium server before tests │ "
 echo -e " └────────────────────────────────────────────────────────────────────┘\n\n"
 
-node node_modules/jest/bin/jest.js $@
+#node node_modules/.bin/jest $@ --verbose --runInBand --modulePathIgnorePatterns "test/examples" "test/minefield"
+
+node node_modules/.bin/jest $@ --verbose --runInBand
+
+#node node_modules/.bin/jest -t="redirection 2" --runInBand --modulePathIgnorePatterns "test/examples"
+
+# other useful options
+# --testNamePattern, -t           Run only tests with a name that matches the regex pattern.
+#                                 Run tests that match this spec name (match against the name in describe or test, basically).
+#           from : https://facebook.github.io/jest/docs/en/cli.html
+#       example:
+#           /bin/bash test.sh -t="redirection\s2"
 
