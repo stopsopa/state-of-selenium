@@ -5,7 +5,7 @@ const { By, promise, until, Key } = require('selenium-webdriver');
 
 const log = require('../../lib/logn');
 
-describe('ng-calc', async () => {
+describe('wait-for-elementy-async', async () => {
 
     let driver;
 
@@ -16,7 +16,7 @@ describe('ng-calc', async () => {
 
     test('find by js async', async () => {
 
-        await driver.getTestServer('/003-wait-for-element-async/index.html');
+        await driver.getTestServer('/web/003-wait-for-element-async/index.html');
 
         // await promise.delayed(4000);
 
@@ -30,6 +30,8 @@ describe('ng-calc', async () => {
 
         /**
          * This will wait for element to appear on the page (in this case for 5 sec, interval 1 sec)
+         *
+         * now use driver.waitForElement instead
          */
             let li = await driver.waitInterval(until.elementLocated(By.js(() => {
                 return document.querySelector('.dynamic');

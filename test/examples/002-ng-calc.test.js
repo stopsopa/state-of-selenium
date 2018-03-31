@@ -28,7 +28,7 @@ describe('ng-calc', async () => {
 
         // https://stopsopa.github.io/research-protractor/e2e/angular-calc/calc.html
         // await driver.get('https://stopsopa.github.io/research-protractor/e2e/angular-calc/calc.html');
-        await driver.getTestServer('/002-ng-calc/calc.html');
+        await driver.getTestServer('/web/002-ng-calc/calc.html');
 
         // await promise.delayed(10000);
 
@@ -62,6 +62,9 @@ describe('ng-calc', async () => {
 
         let interval = 300;
 
+        /**
+         * use instead driver.waitForElement
+         */
         let result = await driver.waitInterval(until.elementLocated(By.css('.table > tbody > tr:nth-child(1) > td:nth-child(3)')), timeout, interval);
         // let result = await driver.wait(until.elementLocated(By.css('.table > tbody > tr:nth-child(1) > td:nth-child(3)')), timeout);
 

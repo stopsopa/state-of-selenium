@@ -10,6 +10,8 @@
 
 const path = require('path');
 
+const fs = require('fs');
+
 const log = require(path.resolve(__dirname, '.', 'lib', 'logn'));
 
 
@@ -150,7 +152,7 @@ module.exports = (async function () {
 
         url += path;
 
-        console.log('getTestServer: ', url);
+        process.stdout.write('getTestServer: ' + url + "\n");
 
         return driver.get(url, ...rest);
     }
@@ -170,23 +172,36 @@ module.exports = (async function () {
 
         url += path;
 
-        console.log('getTestServer: ', url);
+        process.stdout.write('getTestServer: ' + url + "\n");
 
         return driver.get(url, ...rest);
     }
-    driver.waitInterval = async (condition, timeout = 0, interval = 300, message = undefined) => new Promise((resolve, reject) => {
+
+    driver.waitInterval = (condition, timeout, interval = 300, message = undefined) => new Promise((resolve, reject) => {
+
+        if (typeof timeout === 'undefined') {
+
+            timeout = 5000;
+        }
+
+        timeout = parseInt(timeout, 10);
+
+        if (timeout < 1) {
+
+            throw "waitInterval: timeout should be bigger then 1"
+        }
 
         let
             inthan,
             resolved = false,
-            timeoutHandler = e => {
+            timeoutHandler = (e, name) => {
 
                 resolved = true;
 
                 clearInterval(inthan);
 
                 reject(e || {
-                    name: "TimeoutError",
+                    name: name || "TimeoutError",
                     remoteStacktrace: "",
                     origin: 'driver.waitInterval'
                 });
@@ -210,7 +225,7 @@ module.exports = (async function () {
                                 return setTimeout(again, interval);
                             }
 
-                            timeoutHandler(e)
+                            timeoutHandler(e, 'Other error, NOT TimeoutError')
                         }
                     )
                 ;
@@ -234,9 +249,193 @@ module.exports = (async function () {
         return driver;
     }
 
-    driver.waitForElement = (fn, timeout = 0, interval = 300, message = undefined) =>
-        driver.waitInterval(until.elementLocated(By.js(fn)), timeout, interval, message)
-    ;
+    driver.waitForElement = (fn, interval, timeout, message) => {
+
+        var promise = driver.waitInterval(until.elementLocated(By.js(fn)), timeout, interval, message)
+
+        promise.catch(reason => {
+            process.stdout.write('waitForElement catch: ' + "\n");
+            log.dump(reason)
+        })
+
+        return promise;
+    };
+
+    driver.waitForCustomEvent = (function () {
+
+        let cache;
+
+        const getSeleniumLib = () => {
+
+            if ( ! cache ) {
+
+                cache = fs.readFileSync(path.resolve(__dirname, 'lib/selenium.min.js')).toString();
+            }
+
+            return cache;
+        }
+
+        /**
+         * requirement - function || bool[works like multiple flag] (def, undefined)
+         * await driver.waitForCustomEvent('mainRequest:material-list', (data, curlang) => {
+                return data && data.supportSelectedLanguage == curlang
+           }, curlang)
+         */
+        return (name, requirement, dataForRequirement) => {
+
+            if ( ! name || typeof name !== 'string') {
+
+                throw `waitForCustomEvent: name should be non empty string`;
+            }
+
+            if (typeof requirement === 'undefined') {
+
+                requirement = false;
+            }
+
+            const promise = driver.executeAsyncScript(
+                function(json){
+                    eval(json.seleniumplugin);
+                    eval('var requirement=' + json.requirement);
+                    delete json.seleniumplugin;
+                    var cb=arguments[arguments.length-1];
+                    selenium.subscribe(
+                        json.name,
+                        (typeof requirement==='function') ?
+                            function(data){
+                                if(requirement(data,json.dataForRequirement)){
+                                    cb(data)
+                                }
+                            }:cb,
+                        // data => cb({
+                        //     data:data,
+                        //     json: json
+                        // }),
+                        !!requirement
+                    )
+                },
+                {
+                    name,
+                    seleniumplugin: getSeleniumLib(),
+                    requirement: requirement.toString(),
+                    dataForRequirement,
+                }
+            );
+
+            promise.catch(e => {
+                process.stdout.write('waitForCustomEvent: ' + "\n");
+                log.dump(e)
+            })
+
+            return promise;
+        };
+    }());
+
+    driver.waitForJs = (fn, data, interval = 300) => {
+
+        if (interval < 3) {
+
+            throw `waitForJs: 'interval' should be bigger then 3 ms`
+        }
+
+        if (['function', 'string'].indexOf(typeof fn) === -1) {
+
+            throw `waitForJs: 'fn' should be bigger function or strings`;
+        }
+
+        if (typeof fn === 'string') {
+
+            try {
+                eval('const tmp = ' + fn);
+
+                if (typeof tmp !== 'function') {
+
+                    throw `waitForJs: 'fn' after evaluation is not function`;
+                }
+            }
+            catch (e) {
+
+                throw `waitForJs: evaluation 'fn' parameter from string to function failed`;
+            }
+        }
+
+        const promise = driver.executeAsyncScript(
+            function(json){eval('var fn='+json.fn);var cb = arguments[arguments.length - 1];var handler;function test(){let result;try{result = fn(json.data)}catch(e){clearInterval(handler);return cb({__origin__:'waitForJs',string:e.toString(),fileName:e.fileName, stack:e.stack,columnNumber:e.columnNumber})}if(result){clearInterval(handler);cb(result)}};handler=setInterval(test,json.interval);test()},
+
+            // implementation for testing
+            // function (json) {
+            //
+            //     logInBrowser('executed');
+            //
+            //     eval('var fn = ' + json.fn);
+            //
+            //     var cb = arguments[arguments.length - 1];
+            //
+            //     var handler, tmp;
+            //
+            //     function test() {
+            //
+            //         logInBrowser(JSON.stringify(json.data))
+            //
+            //         let result
+            //
+            //         try {
+            //
+            //             result = fn(json.data);
+            //         }
+            //         catch (e) {
+            //
+            //             clearInterval(handler);
+            //
+            //             return cb({
+            //                 __origin__      : 'waitForJs',
+            //                 string          : e.toString(),
+            //                 fileName        : e.fileName,
+            //                 stack           : e.stack,
+            //                 columnNumber    : e.columnNumber
+            //             })
+            //         }
+            //
+            //         if (result) {
+            //
+            //             clearInterval(handler);
+            //
+            //             cb(result);
+            //         }
+            //     };
+            //
+            //     handler = setInterval(test, json.interval);
+            //
+            //     test();
+            // },
+            {
+                fn: fn.toString(),
+                interval,
+                data
+            }
+            )
+                .then(result => {
+
+                    if (result && result.__origin__ === 'waitForJs') {
+
+                        return Promise.reject(result);
+                    }
+
+                    return result;
+                })
+        ;
+
+        promise.catch(e => {
+            process.stdout.write('waitForCustomEvent: ' + "\n");
+            log.dump(e)
+        })
+
+        return promise;
+    }
+
+    driver.sleep = ms => promise.delayed(ms)
+
+    driver.sleepSec = sec => promise.delayed(Math.ceil(sec * 1000));
 
     return driver;
 })();

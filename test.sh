@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function red {
+    printf "\e[91m$1\e[0m\n"
+}
+function green {
+    printf "\e[32m$1\e[0m\n"
+}
 
 if [ "$1" = "--help" ]; then
 
@@ -40,4 +46,17 @@ node node_modules/.bin/jest $@ --verbose --runInBand
 #           from : https://facebook.github.io/jest/docs/en/cli.html
 #       example:
 #           /bin/bash test.sh -t="redirection\s2"
+
+
+STATUS=$?
+
+if [ "$STATUS" == "0" ]; then
+
+    green "\n    Tests passed\n";
+else
+
+    red "\n    Tests crashed\n";
+
+    exit $STATUS
+fi
 

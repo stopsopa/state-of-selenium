@@ -5,7 +5,7 @@ const { By, promise, until, Key } = require('selenium-webdriver');
 
 const log = require('../../lib/logn');
 
-describe('ng-calc', async () => {
+describe('wait-for-js-dynamic-fn', async () => {
 
     let driver;
 
@@ -14,9 +14,9 @@ describe('ng-calc', async () => {
         driver = await require(path.resolve(__dirname, '..', '..', 'driver.js'));
     });
 
-    test('wait-for-js', async () => {
+    test('wait-for-js-dynamic', async () => {
 
-        await driver.getTestServer('/004-wait-for-js2/index.html');
+        await driver.getTestServer('/web/005-wait-for-js-dynamic-fn/index.html');
 
         var json = await driver.executeAsyncScript(
             function (json) {

@@ -5,6 +5,6 @@
   },
   "scripts": {
     "test": "node node_modules/jest/bin/jest.js",
-    "server": "node server.js --port $(node configReader.js --param testServer.port) --dir web --log 15"
+    "server": "node server.js --port $(node configReader.js --param testServer.port) --log 15"
   }
 }
