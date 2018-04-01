@@ -5,7 +5,7 @@ const path              = require('path');
 
 // const yaml              = require('./lib/yaml');
 
-// const log               = require('./lib/logn');
+const log               = require('./lib/logn');
 
 // const sf_parameters_yml = path.resolve(__dirname, '../php/app/config/parameters.yml');
 //
@@ -15,12 +15,17 @@ const path              = require('path');
 //
 // const docker_local      = yaml(docker_local_yml);
 
+const TRAVIS = process.env.TRAVIS;
+
+log('TRAVIS')
+log.dump(TRAVIS)
+
 module.exports = {
     width: 1024,
     height: 768,
     hub: {
         host: "localhost", // http://localhost:4445/grid/console?config=true&configDebug=true&refresh=10
-        port: 4445 // def 4444
+        port: TRAVIS ? 80 : 4445 // def 4444
     },
     node: {
         host: "127.0.0.1",

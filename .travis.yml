@@ -10,7 +10,7 @@ before_script:
   - sleep 2
 
 script:
-  - node node_modules/.bin/jest --verbose --runInBand
+  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
 
 addons:
   sauce_connect:
