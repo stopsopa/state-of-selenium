@@ -1,7 +1,7 @@
 
 const path              = require('path');
 
-const host              = require('../react/hosts');
+// const host              = require('../react/hosts');
 
 // const yaml              = require('./lib/yaml');
 
@@ -30,8 +30,12 @@ module.exports = {
     curlTestMaxTime: 1, // sec
 
 
-    projectServer: host.server,
+    // projectServer: host.server,
 
+    projectServer: { // yarn server
+        host: 'localhost',
+        port: 93
+    },
 
     testServer: { // yarn server
         host: 'localhost',
