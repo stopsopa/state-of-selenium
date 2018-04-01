@@ -36,8 +36,7 @@ At the moment of writing this doc 4.0.0-alpha.1
 
 # Version of drivers used in this tutorials:
 
-* [geckodriver v0.19.1](https://github.com/mozilla/geckodriver/releases/tag/v0.19.1)
-* [chromedriver 2.9](http://chromedriver.storage.googleapis.com/index.html?path=2.9/)
+[file](/stopsopa/state-of-selenium/blob/master/versions.log)
 
 # It seems like it is better to not use Control Flow
 
