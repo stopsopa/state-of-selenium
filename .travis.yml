@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "7"
+  - "6"
+  - "stable"
+
+env:
+  - TRAVIS=true
+
+script:
+  - node node_modules/.bin/jest --verbose --runInBand
+

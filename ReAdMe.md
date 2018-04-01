@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=master)](https://travis-ci.org/stopsopa/state-of-selenium)
+
 # how to use
 
     yarn install
