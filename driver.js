@@ -251,6 +251,19 @@ module.exports = (async function () {
 
     driver.waitForElement = (fn, interval, timeout, message) => {
 
+        if (typeof fn === 'string') {
+
+            let b = '"'
+
+            if (fn.indexOf('"') > -1) {
+
+                b = "'";
+            }
+
+            fn = Function(`return document.querySelector(${b}${fn}${b})`);
+
+        }
+
         var promise = driver.waitInterval(until.elementLocated(By.js(fn)), timeout, interval, message)
 
         promise.catch(reason => {
