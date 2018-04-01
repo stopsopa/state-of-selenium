@@ -16,6 +16,6 @@ script:
 
 addons:
   sauce_connect:
-    username: "stopsopa-test"
-    access_key: "9d04c776-a9a6-4207-8d89-676c9d28abc4"
-
+    username: "stopsopa"
+  jwt:
+    secure: "L39kinFOFke3MjOlFPN0sUM1KyTS0B2xb0Q6UdUY4gMt6XkNarfpNtwyzMnnsWHPRClQQILeDQzBt8hTeq4QIIbxW2bkFkiQo+XL+Bve5XUsmzlRDSp5BYO8UMmyCUdAmFjct3UX7WSf3yY1uKWGxXpO0MJqjmjfEwzhILMwzu2UfNxo4Vw59hDcLhXq+x5EASWDcKQPi/Uej+GkoNWYYsQk0u2qB6e1dx/2xy5yIXTKFB5QwjzzuisR8ljS8tr47+y2kKEAIJG+cCvzVqUBkjv4QxN/eZ2AGAo49FeuhSTY0EgCN40t8OsihCHllkVdKd9s6czUAYEsWRTO5bcrE6nto0l/nzyps25+92omxtRjwqI5ghoMbsNgKUnx1WgdMGPzCacNGmeCUjWzv244cC00Zt7aFJ+oRE3nCpYO1A6SivS3KsIwCzYepSHCgzClCUlC/jjClYuu7j/L1q91D+phdp5/36TZIPN2u5QowN0B2GnqIKvSJXImNMv0wi5yWV2rJIlI8lY7v6mZdmUUU5JRNaFdZbwzLLB+DCxaMOHX+Lcsdvlq2Fut7XOcrXFE9plyPp04S/NhLvm3xlI7BghXjriJH4j9pFC1igVuCksdhT1aSuXm8emvXktowi/F91IcXBENQwgHk119YcSWIeewT4nwekbGmpKmtkmwJlI="
