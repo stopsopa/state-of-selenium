@@ -7,6 +7,15 @@ node_js:
 env:
   - TRAVIS=true
 
+before_script:
+  - make test-server & disown
+  - sleep 2
+
 script:
   - node node_modules/.bin/jest --verbose --runInBand
+
+addons:
+  sauce_connect:
+    username: "stopsopa-test"
+    access_key: "9d04c776-a9a6-4207-8d89-676c9d28abc4"
 

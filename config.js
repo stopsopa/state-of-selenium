@@ -39,7 +39,7 @@ module.exports = {
 
     testServer: { // yarn server
         host: 'localhost',
-        port: 4447
+        port: 1025
     },
 
     // mysql: { // https://github.com/mysqljs/mysql#connection-options
