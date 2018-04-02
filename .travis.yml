@@ -19,7 +19,7 @@ before_script:
 script:
 #  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
 
-  - set
+  - printenv
   - echo "-<$TEST_VAR>-"
 
 #addons:
