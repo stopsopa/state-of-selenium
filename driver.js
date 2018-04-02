@@ -24,7 +24,7 @@ const log = require(path.resolve(__dirname, '.', 'lib', 'logn'));
 
 // require(path.resolve(__dirname, '..', 'lib', 'rootrequire'))(__dirname, '..');
 
-const {Builder, By, Key, until, promise, Browser} = require('selenium-webdriver');
+const {Builder, By, Key, until, promise, Browser, Platform } = require('selenium-webdriver');
 const chrome    = require('selenium-webdriver/chrome');
 const Options   = chrome.Options;
 // const edge      = require('selenium-webdriver/edge');
@@ -54,9 +54,19 @@ module.exports = (async function () {
     let driver;
 
     try {
+
+        /**
+         * https://saucelabs.com/platforms
+         * https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/ g(Platform Configurator)
+         * caps = {};
+         caps['browserName'] = 'chrome';
+         caps['platform'] = 'Windows 10';
+         caps['version'] = '65.0';
+         */
         driver = await new Builder()
             .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-            .forBrowser(Browser.CHROME)
+            .forBrowser(Browser.CHROME, 'Windows 10', '65.0') // local instance of node don't care about platfor & version, but saucelabs do
+            // .forBrowser(Browser.CHROME)
             .setChromeOptions(
                 new chrome
                     .Options()
@@ -126,12 +136,15 @@ module.exports = (async function () {
     }
     finally {
 
-        // await driver.quit();
+        // if (driver) {
+        //
+        //     await driver.quit();
+        // }
     }
 
     if ( ! driver ) {
 
-        throw "driver.js: driver object not created ...";
+        throw "driver.js: driver object was not created ...";
     }
 
     driver.config = config;
