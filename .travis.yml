@@ -22,7 +22,7 @@ script:
   - printenv
   - foo=TEST_VAR
   - eval echo \${$foo} > test.log
-  - cat test.log
+  - sed -r -e 's/^.{2}/&#/' test.log
 
 #addons:
 #  sauce_connect:
