@@ -18,7 +18,7 @@ describe('wait-custom-event', async () => {
 
     test('inline', async () => {
 
-        await driver.getTestServer('/web/005-wait-custom-event/inline.html');
+        await driver.getTestServer('/web/006-wait-custom-event/inline.html');
 
         let button = await driver.findElement(By.css('button'));
 
@@ -78,7 +78,7 @@ describe('wait-custom-event', async () => {
 
     test('import', async () => {
 
-        await driver.getTestServer('/web/005-wait-custom-event/import.html');
+        await driver.getTestServer('/web/006-wait-custom-event/import.html');
 
         let button = await driver.findElement(By.css('button'));
 
