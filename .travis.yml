@@ -20,7 +20,6 @@ script:
 #  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
 
   - printenv
-  - export TEST_VAR="value of testvareee"
   - foo=TEST_VAR
   - eval echo \${$foo}
 
