@@ -34,13 +34,28 @@ const Options   = chrome.Options;
 
 const config = require(path.resolve('.', 'config'));
 
+let endpoint;
+
+if (process.env.TRAVIS) {
+
+    /**
+     * https://docs.travis-ci.com/user/sauce-connect/#Setting-up-Sauce-Connect
+     * https://github.com/samccone/travis-sauce-connect/blob/master/test/basic.js
+     */
+    endpoint = 'http://'+ process.env.SAUCE_USERNAME+':'+process.env.SAUCE_ACCESS_KEY+'@ondemand.saucelabs.com:80/wd/hub';
+}
+else {
+
+    endpoint = `http://${config.node.host}:${config.node.port}/wd/hub`;
+}
+
 module.exports = (async function () {
 
     let driver;
 
     try {
         driver = await new Builder()
-            .usingServer(`http://${config.node.host}:${config.node.port}/wd/hub`) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
+            .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
             .forBrowser(Browser.CHROME)
             .setChromeOptions(
                 new chrome

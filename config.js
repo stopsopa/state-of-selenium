@@ -15,12 +15,10 @@ const log               = require('./lib/logn');
 //
 // const docker_local      = yaml(docker_local_yml);
 
-const TRAVIS = process.env.TRAVIS;
-
 // log('TRAVIS')
 // log.dump(TRAVIS)
 
-module.exports = {
+const config = {
     width: 1024,
     height: 768,
     hub: {
@@ -29,7 +27,7 @@ module.exports = {
     },
     node: {
         host: "127.0.0.1",
-        port: TRAVIS ? 80 : 4446 // def 5555
+        port: 4446 // def 5555
     },
     waitToRunSeleniumCluster: 8, // sec
     curlTestMaxTime: 1, // sec
@@ -43,10 +41,16 @@ module.exports = {
         port: 93
     },
 
+    // testServer: { // yarn server
+    //     schema: TRAVIS ? 'https' : 'http',
+    //     host: TRAVIS ? 'stopsopa.github.io' : 'localhost',
+    //     port: TRAVIS ? 80 : 1025
+    // },
+
     testServer: { // yarn server
-        schema: TRAVIS ? 'https' : 'http',
-        host: TRAVIS ? 'stopsopa.github.io' : 'localhost',
-        port: TRAVIS ? 80 : 1025
+        schema: 'http',
+        host: 'localhost',
+        port: 1025
     },
 
     // mysql: { // https://github.com/mysqljs/mysql#connection-options
@@ -60,3 +64,10 @@ module.exports = {
     //     table           : 'spark_cache'
     // }
 };
+
+if (process.env.TRAVIS) {
+
+    config.node.port = 80;
+}
+
+module.exports = config;

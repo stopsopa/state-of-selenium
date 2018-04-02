@@ -10,6 +10,7 @@ env:
     - secure: "fFsA4pfikw6o9BR55rLbx0/ivfdvprs86o8av7v46Qq577bi66j4ZQV0lJ84+NsGiqCEBI4qPAcHgSDI3buYmKrhlbF5atu5VcaiYt2CW3z1Kfswq8Q+SPTeklEWGANx/Udj5AxFucoLSNlmgxIHTLp5CWuTV5WEHyOaj7rxIvjOWitq9dZD/ErwfEGitC+5uNQgzBQ3Rt7hmfg/V9amAgvybnAv+HxIIf7AUMBxKvUzixwCvIxs5SkM7pffTG+E/0acd0qopd2+h9o97DNtcSaVRVA81QDYslMrvI0zkBN0GqsN76Ik+TqkQTD+CfnfKGHKbHzGLyk4fv9n+XB1XffPabXQHBfGZHei48SlFfeKdaCY66+k1yLPxPu+Ge67PRca8ODGHbrGVZgFJRFXBGRG2LtIWLHF+vXnybcV+C6TCGz1YT8i8G/DSguqZwDgDrqF0NnbHym6AX9zvk5JszwhLJUyaFYsZwQ2sKL6agKCoKt5BwRwbX2d1/+hWeA3n0rr12BoTE2dmv6AtVBComWHXmlpHx7neoroSGHR+/eCXIzU1Vyjz3W2VoMXYSVDH7fKPEqdvX+UHuPdhBJZKrcppUXd2ZDOTc+bvlnLpvXf4qXV/TXAsDEhQW4gO9rrm/qqw5/jzl1mRkDcFaX+Y/lDlDp0j4EUPFsikn8hlO0="
 
 before_script:
+  - curl -v https://saucelabs.com/ -I
 #  - make test-server & disown
 #  - sleep 2
 #  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
