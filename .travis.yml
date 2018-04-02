@@ -18,7 +18,8 @@ before_script:
 
 script:
   - node driver.js
-  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
+#  - node node_modules/.bin/jest --verbose --runInBand test/examples/006
+  - node node_modules/.bin/jest --verbose --runInBand
 
 #  - printenv
 #  - foo=TEST_VAR
