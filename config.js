@@ -41,12 +41,6 @@ const config = {
         port: 93
     },
 
-    // testServer: { // yarn server
-    //     schema: TRAVIS ? 'https' : 'http',
-    //     host: TRAVIS ? 'stopsopa.github.io' : 'localhost',
-    //     port: TRAVIS ? 80 : 1025
-    // },
-
     testServer: { // yarn server
         schema: 'http',
         host: 'localhost',
@@ -68,6 +62,10 @@ const config = {
 if (process.env.TRAVIS) {
 
     config.node.port = 80;
+    
+    config.testServer.schema    = 'https';
+    config.testServer.host      = 'stopsopa.github.io';
+    config.testServer.port      = 80;
 }
 
 module.exports = config;
