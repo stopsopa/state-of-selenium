@@ -12,9 +12,9 @@ before_script:
   - curl -v https://saucelabs.com/ -I
 #  - make test-server & disown
 #  - sleep 2
-#  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
-#  - unzip chromedriver_linux64.zip
-#  - chmod a+x chromedriver
+  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - chmod a+x chromedriver
 
 script:
   - node driver.js
