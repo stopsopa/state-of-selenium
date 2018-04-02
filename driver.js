@@ -187,6 +187,11 @@ module.exports = (async function () {
             url += ':' + config.testServer.port;
         }
 
+        if (process.env.TRAVIS) {
+
+            url += '/state-of-selenium';
+        }
+
         url += path;
 
         process.stdout.write('getTestServer: ' + url + "\n");
