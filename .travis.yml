@@ -20,7 +20,9 @@ script:
 #  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
 
   - printenv
-  - echo "-<$TEST_VAR>-"
+  - export TEST_VAR="value of testvareee"
+  - foo=TEST_VAR
+  - eval echo \${$foo}
 
 #addons:
 #  sauce_connect:
