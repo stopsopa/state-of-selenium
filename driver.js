@@ -143,7 +143,7 @@ module.exports = (async function () {
             return old(path, ...rest);
         }
 
-        let url = `http://${config.testServer.host}`;
+        let url = `${config.testServer.schema}://${config.testServer.host}`;
 
         if (config.testServer.port != 80) {
 
@@ -163,7 +163,7 @@ module.exports = (async function () {
             return old(path, ...rest);
         }
 
-        let url = `http://${config.projectServer.host}`;
+        let url = `${config.projectServer.schema}://${config.projectServer.host}`;
 
         if (config.projectServer.port != 80) {
 

@@ -38,13 +38,15 @@ module.exports = {
     // projectServer: host.server,
 
     projectServer: { // yarn server
+        schema: 'http',
         host: 'localhost',
         port: 93
     },
 
     testServer: { // yarn server
-        host: 'localhost',
-        port: 1025
+        schema: TRAVIS ? 'https' : 'http',
+        host: TRAVIS ? 'stopsopa.github.io' : 'localhost',
+        port: TRAVIS ? 80 : 1025
     },
 
     // mysql: { // https://github.com/mysqljs/mysql#connection-options
