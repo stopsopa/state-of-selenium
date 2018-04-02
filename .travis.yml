@@ -8,6 +8,9 @@ env:
 before_script:
   - make test-server & disown
   - sleep 2
+  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - chmod a+x chromedriver
 
 script:
   - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
