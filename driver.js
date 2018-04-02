@@ -129,6 +129,11 @@ module.exports = (async function () {
         // await driver.quit();
     }
 
+    if ( ! driver ) {
+
+        throw "driver.js: driver object not created ...";
+    }
+
     driver.config = config;
 
     /**
