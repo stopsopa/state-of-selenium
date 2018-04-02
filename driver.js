@@ -1,4 +1,8 @@
-
+// https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+// caps = {};
+// caps['browserName'] = 'chrome';
+// caps['platform'] = 'Windows 10';
+// caps['version'] = '65.0';
 
 // from : http://seleniumhq.github.io/selenium/docs/api/javascript/
 // and above is from: https://github.com/SeleniumHQ/selenium
