@@ -7,6 +7,7 @@ env:
     - TRAVIS=true
     - SAUCE_USERNAME="stopsopa-test"
     - secure: eeFmoUxofQPSC6RoOQy362GAV91dmRN0tyri5+JSoYIQYfyc1c961Pzn+m1JooZ3lcEDIUWGjIvmj7q8TnZFjj80YSZIKSmd4xdC0KmPzuH/7G8dzvuIfksIlzjR8mIpWMtonl7CsjihTsflaku1wAVQFRNouAT8McIIqO3dbIyeQllNnbq47Z3HQXsgcRUGSh12VlYPsJoG2ikCT4FY4fXMOI0gi3/oLLOLsyiSTnTMPOuRg1uMxoB7FaAxFm06ZOtBwKBh20iaSIpgyEfFKH2OdnvLzBQ4QS1j0/55e03jXPnnu6ARcL2VvbYYx1ThXOgSW/Q2D0mQkz21snPK3hJdYopUnkvBaedLbGWXy9gTu3tVAco01H3l1y/AJJdEpOaWRA7abg2I086jVBL+I5+YvqOHzRrpEgkNbvNOWvtKookY0eZg3C10Xe8i2EKkO+sBCKQdgQTL7tFkG/Ns0kNkLzEfrk6QD5ajO/pX7XX0QjpfVvW/LKniSSQz5Tbf0PV3WPuKmlm2F6x76qjEpFjXgGJ1vCSzja8RR2QpDEO13bmC57hT/iS5mIIcAjYROGxyCliOmbkuUYrj/GPrAmmuXQrJqRDFBPfxr5V9FVnA0QhhVEqwsixMKnH/fR56E9P8AHF13gtG1Uu1JTuIlnCgW0gba7jL6wk5WhCMmik=
+    - secure: BzPg6hWeRSXwt4exmKvXUvwr8eIMWb+SJhM/nV3EsOmw7lwyodSY5PLwRcbcE1uMNkNpl11trNztC1ZtIaGenJTHM8+/BkqgxsFGpcIvqinX3U3xUJvlyA8rUPBeb1bAh4S1A33JtyPt9yyCraZD38x4yFJXukTLkQ+9ChdE1E4P2aQGfJ6ch80cGGzrnZI14AcZNvgn0TOUtJlhbSShaQfTgH8qIfM/6OgqVyldDfo9WJK/jbGT6wKGGndHHFBgCNGXSZ90WabTyr7YgjSRigrr2zUFpP0r+mY4eEhNx5F0WXpvIGCF2wO6Yn/OtFc6DsyQRbNkeaZyzfjb+MjZygAbkyHQQG+HUFp3/44svQX/ahI2zXKh09bGC3CAN/9ug7Q0MMhyXPZbq/PKO17fu1L4Qh+PTy6Jm8Sz1fzGXor2KVch9UlD7OFiGLrYNPzpNVxIamoQmi1UgMM/OiSNFUpHotS81mdg6Y0oXtECOU7oNlR5Fr8OnyrUOpKUlBVJ9b3JCMANNe3QHVKT48eur88RuGtBA3kiH4ElFv0ldAlkWCrvGe0x6KBdr/LKwJNHJ7k18ORz4mHSoaxoPjZ0Szr4Iu1cViGs+BShZOKuI1W8aFBNtUXwhUz0S7AnRi7lroS2lRXq59hPT43RvIeDuhd79Qs/IAJmn3xVn+/Cxyw=
 
 before_script:
 #  - make test-server & disown
@@ -16,7 +17,10 @@ before_script:
   - chmod a+x chromedriver
 
 script:
-  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
+#  - node node_modules/.bin/jest --verbose --runInBand --verbose test/examples/006
+
+  - set
+  - echo "-<$TEST_VAR>-"
 
 addons:
   sauce_connect:
