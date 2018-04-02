@@ -21,7 +21,8 @@ script:
 
   - printenv
   - foo=TEST_VAR
-  - eval echo \${$foo}
+  - eval echo \${$foo} > test.log
+  - cat test.log
 
 #addons:
 #  sauce_connect:
