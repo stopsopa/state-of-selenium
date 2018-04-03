@@ -16,6 +16,8 @@ const path = require('path');
 
 const fs = require('fs');
 
+const stringify = require('json-stable-stringify');
+
 const log = require(path.resolve(__dirname, '.', 'lib', 'logn'));
 
 
@@ -487,6 +489,8 @@ module.exports = (async function () {
 
         return promise;
     }
+
+    driver.json = data => stringify(data)
 
     driver.sleep = ms => promise.delayed(ms)
 

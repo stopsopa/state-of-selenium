@@ -43,7 +43,11 @@ describe('wait-for-js-fixed-time', async () => {
         expect(json.realdata).toBe("rgb(0, 0, 255)");
         expect(json.test).toBe("data passed from test");
 
-        expect(JSON.stringify(json)).toBe('{"realdata":"rgb(0, 0, 255)","test":"data passed from test","added":"in browser"}');
+        expect(driver.json(json)).toBe(
+            driver.json(
+                JSON.parse('{"realdata":"rgb(0, 0, 255)","test":"data passed from test","added":"in browser"}')
+            )
+        );
 
     }, 30000);
 
