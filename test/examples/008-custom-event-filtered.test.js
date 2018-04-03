@@ -49,7 +49,7 @@ describe('008-custom-event-filtered', async () => {
 
     }, 7000);
 
-    test('subscribed and filter event', async () => {
+    test('subscribed and filter event - select,option', async () => {
 
         await driver.getTestServer('/web/008-custom-event-filtered/index.html?filtered_and_sequence');
         // await driver.get('https://stopsopa.github.io/state-of-selenium/web/008-custom-event-filtered/index.html?filtered_and_sequence');
