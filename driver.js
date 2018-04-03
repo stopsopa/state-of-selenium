@@ -184,51 +184,59 @@ module.exports = (async function () {
      * @param rest
      * @returns {*}
      */
-    driver.getTestServer = (path, ...rest) => {
+    (function (old) {
+        driver.get = (...args) => {
 
-        if (/^https?:\/\//.test(path)) {
+            process.stdout.write('driver.get: ' + args[0] + "\n");
 
-            return old(path, ...rest);
+            return old.apply(driver, args);
         }
+        driver.getTestServer = (path, ...rest) => {
 
-        let url = `${config.testServer.schema}://${config.testServer.host}`;
+            if (/^https?:\/\//.test(path)) {
 
-        if (config.testServer.port != 80) {
+                process.stdout.write('getTestServer old: ' + path + "\n");
 
-            url += ':' + config.testServer.port;
+                return old.apply(driver, [path, ...rest]);
+            }
+
+            let url = `${config.testServer.schema}://${config.testServer.host}`;
+
+            if (config.testServer.port != 80) {
+
+                url += ':' + config.testServer.port;
+            }
+
+            url += path;
+
+            process.stdout.write('getTestServer: ' + url + "\n");
+
+            return old.apply(driver, [url, ...rest]);
         }
+        driver.getProjectServer = (path, ...rest) => {
 
-        if (process.env.TRAVIS) {
+            if (/^https?:\/\//.test(path)) {
 
-            url += '/state-of-selenium';
+                process.stdout.write('getProjectServer old: ' + path + "\n");
+
+                return old.apply(driver, [path, ...rest]);
+            }
+
+            let url = `${config.projectServer.schema}://${config.projectServer.host}`;
+
+            if (config.projectServer.port != 80) {
+
+                url += ':' + config.projectServer.port;
+            }
+
+            url += path;
+
+            process.stdout.write('getProjectServer: ' + url + "\n");
+
+            return old.apply(driver, [url, ...rest]);
         }
+    }(driver.get));
 
-        url += path;
-
-        process.stdout.write('getTestServer: ' + url + "\n");
-
-        return driver.get(url, ...rest);
-    }
-    driver.getProjectServer = (path, ...rest) => {
-
-        if (/^https?:\/\//.test(path)) {
-
-            return old(path, ...rest);
-        }
-
-        let url = `${config.projectServer.schema}://${config.projectServer.host}`;
-
-        if (config.projectServer.port != 80) {
-
-            url += ':' + config.projectServer.port;
-        }
-
-        url += path;
-
-        process.stdout.write('getTestServer: ' + url + "\n");
-
-        return driver.get(url, ...rest);
-    }
 
     driver.waitInterval = (condition, timeout, interval = 300, message = undefined) => new Promise((resolve, reject) => {
 

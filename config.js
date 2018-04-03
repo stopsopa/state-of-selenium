@@ -64,7 +64,7 @@ if (process.env.TRAVIS) {
     config.node.port = 80;
     
     config.testServer.schema    = 'https';
-    config.testServer.host      = 'stopsopa.github.io';
+    config.testServer.host      = 'stopsopa.github.io/state-of-selenium';
     config.testServer.port      = 80;
 }
 

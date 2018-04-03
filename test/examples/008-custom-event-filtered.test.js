@@ -17,6 +17,7 @@ describe('008-custom-event-filtered', async () => {
     test('subscribed to wrong event', async () => {
 
         await driver.getTestServer('/web/008-custom-event-filtered/index.html?wrong');
+        // await driver.get('https://stopsopa.github.io/state-of-selenium/web/008-custom-event-filtered/index.html?wrong');
 
         // await driver.sleepSec(1)
 
@@ -32,6 +33,7 @@ describe('008-custom-event-filtered', async () => {
     test('subscribed and filter event', async () => {
 
         await driver.getTestServer('/web/008-custom-event-filtered/index.html?filtered_and_sequence');
+        // await driver.get('https://stopsopa.github.io/state-of-selenium/web/008-custom-event-filtered/index.html?filtered_and_sequence');
 
         const option = await driver.waitForElement(() => {
             return document.querySelectorAll('select option')[1]
