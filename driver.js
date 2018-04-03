@@ -138,9 +138,17 @@ module.exports = (async function () {
     }
     finally {
 
+        const timeout = 20000;
+
+        setTimeout(async () => {
+
+            log('stop after fix aboumt of time: ' + timeout);
+
+            await driver.quit();
+
+        }, timeout)
         // if (driver) {
         //
-        //     await driver.quit();
         // }
     }
 
