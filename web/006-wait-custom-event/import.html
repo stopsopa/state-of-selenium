@@ -27,7 +27,7 @@
     <div id="DOMContentLoaded">before DOMContentLoaded</div>
     <pre></pre>
 
-    <script src="/lib/selenium.min.js"></script>
+    <script src="../../lib/selenium.min.js"></script>
     <script>
 
         window.logInBrowser = str => document.querySelector('pre').innerText = (new Date()).toISOString().substring(0, 19).replace('T', ' ') + ": " + str + "\n" + document.querySelector('pre').innerText;
