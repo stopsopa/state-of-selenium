@@ -17,7 +17,7 @@ before_script:
   - chmod a+x chromedriver
 
 script:
-  - rm -rf test/examples/__*
+#  - rm -rf test/examples/__*
 #  - node driver.js
   - node node_modules/.bin/jest --verbose --runInBand
 #  - node node_modules/.bin/jest --verbose --runInBand test/examples/006
