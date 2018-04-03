@@ -30,6 +30,25 @@ describe('008-custom-event-filtered', async () => {
 
     }, 4000);
 
+    test('subscribed and filter event - button', async () => {
+
+        await driver.getTestServer('/web/008-custom-event-filtered/button.html?filtered_and_sequence');
+        // await driver.get('https://stopsopa.github.io/state-of-selenium/web/008-custom-event-filtered/index.html?filtered_and_sequence');
+
+        const button = await driver.waitForElement('button');
+
+        await button.click();
+
+        const data = await driver.waitForCustomEvent('test', (data, filter) => {
+            return data.value_to_test === filter.value
+        }, {
+            value: "the event that we waiting for: go"
+        });
+
+        expect(data.value_to_test).toBe("the event that we waiting for: go")
+
+    }, 7000);
+
     test('subscribed and filter event', async () => {
 
         await driver.getTestServer('/web/008-custom-event-filtered/index.html?filtered_and_sequence');
@@ -39,7 +58,7 @@ describe('008-custom-event-filtered', async () => {
             return document.querySelectorAll('select option')[1]
         });
 
-        option.click();
+        await option.click();
 
         const data = await driver.waitForCustomEvent('test', (data, filter) => {
             return data.value_to_test === filter.value
