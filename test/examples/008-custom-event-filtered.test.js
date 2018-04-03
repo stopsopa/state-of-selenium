@@ -27,7 +27,7 @@ describe('008-custom-event-filtered', async () => {
         expect(data.value_to_test).toBe('fake previous remaining event')
         // expect(data.value_to_test).toBe('the event that we waiting for')
 
-        await driver.sleepSec(2)
+        // await driver.sleepSec(2)
 
     }, 4000);
 
@@ -39,6 +39,23 @@ describe('008-custom-event-filtered', async () => {
             return document.querySelectorAll('select option')[1]
         });
 
+        driver.executeAsyncScript((...args) => {
+
+            var cb = args[args.length - 1];
+
+            setTimeout(() => {
+
+                cb(document.querySelector('pre').innerText);
+
+            }, 4000);
+
+        }).then(data => {
+
+            log('pre')
+            log.dump(data)
+
+        })
+
         option.click();
 
         const data = await driver.waitForCustomEvent('test', (data, filter) => {
@@ -47,11 +64,11 @@ describe('008-custom-event-filtered', async () => {
             value: "the event that we waiting for: two"
         });
 
-        await driver.sleepSec(3);
+        await driver.sleepSec(10);
 
         expect(data.value_to_test).toBe("the event that we waiting for: two")
 
-    }, 7000);
+    }, 17000);
 
     test('test selenium.js itself', async () => {
 

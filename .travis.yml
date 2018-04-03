@@ -18,8 +18,9 @@ before_script:
 
 script:
   - node driver.js
+#  - node node_modules/.bin/jest --verbose --runInBand
 #  - node node_modules/.bin/jest --verbose --runInBand test/examples/006
-  - node node_modules/.bin/jest --verbose --runInBand
+  - node node_modules/.bin/jest --verbose --runInBand test/examples/008 -t "subscribed to wrong event"
 
 #  - printenv
 #  - foo=TEST_VAR

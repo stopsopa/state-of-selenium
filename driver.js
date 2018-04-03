@@ -352,15 +352,23 @@ module.exports = (async function () {
 
             const promise = driver.executeAsyncScript(
                 function(json){
+                    logInBrowser && logInBrowser('XX: before json eval')
+                    logInBrowser && logInBrowser('XX: ' + JSON.stringify(json))
                     eval(json.seleniumplugin);
+                    logInBrowser && logInBrowser('XX: before eval requirement')
                     eval('var requirement=' + json.requirement);
+                    logInBrowser && logInBrowser('XX: before delete')
                     delete json.seleniumplugin;
                     var cb=arguments[arguments.length-1];
+                    logInBrowser && logInBrowser('XX: req is fn: ' + (typeof requirement==='function'))
                     selenium.subscribe(
                         json.name,
                         (typeof requirement==='function') ?
                             function(data){
+                                logInBrowser && logInBrowser('XX: inside fn, data: ', JSON.stringify(data))
+                                logInBrowser && logInBrowser('XX: json: ' + JSON.stringify(json))
                                 if(requirement(data,json.dataForRequirement)){
+                                    logInBrowser && logInBrowser('XX: req() return true')
                                     cb(data)
                                 }
                             }:cb,
