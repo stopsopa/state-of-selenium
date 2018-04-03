@@ -57,6 +57,27 @@ module.exports = (async function () {
 
     try {
 
+        let browser = Browser.CHROME;
+
+        let platform = 'macOS 10.12';
+
+        let version = '65.0';
+
+        if (process.env.BROWSER) {
+
+            browser = process.env.BROWSER;
+        }
+
+        if (process.env.PLATFORM) {
+
+            platform = process.env.PLATFORM;
+        }
+
+        if (process.env.VERSION) {
+
+            version = process.env.VERSION;
+        }
+
         /**
          * https://saucelabs.com/platforms
          * https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/ g(Platform Configurator)
@@ -65,13 +86,14 @@ module.exports = (async function () {
          caps['platform'] = 'Windows 10';
          caps['version'] = '65.0';
 
+
          caps['browserName'] = 'chrome';
          caps['platform'] = 'macOS 10.12';
          caps['version'] = '65.0';
          */
         driver = await new Builder()
             .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-            .forBrowser(Browser.CHROME, 'macOS 10.12', '65.0') // local instance of node don't care about platfor & version, but saucelabs do
+            .forBrowser(browser, platform, version) // local instance of node don't care about platform & version, but saucelabs do
             // .forBrowser(Browser.CHROME)
             .setChromeOptions(
                 new chrome
