@@ -64,10 +64,14 @@ module.exports = (async function () {
          caps['browserName'] = 'chrome';
          caps['platform'] = 'Windows 10';
          caps['version'] = '65.0';
+
+         caps['browserName'] = 'chrome';
+         caps['platform'] = 'macOS 10.12';
+         caps['version'] = '65.0';
          */
         driver = await new Builder()
             .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-            .forBrowser(Browser.CHROME, 'Windows 10', '65.0') // local instance of node don't care about platfor & version, but saucelabs do
+            .forBrowser(Browser.CHROME, 'macOS 10.12', '65.0') // local instance of node don't care about platfor & version, but saucelabs do
             // .forBrowser(Browser.CHROME)
             .setChromeOptions(
                 new chrome
@@ -138,18 +142,15 @@ module.exports = (async function () {
     }
     finally {
 
-        const timeout = 20000;
-
-        setTimeout(async () => {
-
-            log('stop after fix aboumt of time: ' + timeout);
-
-            await driver.quit();
-
-        }, timeout)
-        // if (driver) {
+        // const timeout = 20000;
         //
-        // }
+        // setTimeout(async () => {
+        //
+        //     log('stop after fix aboumt of time: ' + timeout);
+        //
+        //     await driver.quit();
+        //
+        // }, timeout)
     }
 
     if ( ! driver ) {
@@ -358,31 +359,19 @@ module.exports = (async function () {
                 requirement = false;
             }
 
-            log('before executeAsync');
-
             const promise = driver.executeAsyncScript(
                 function(json){
-                    logInBrowser && logInBrowser('XX: before json eval')
-                    logInBrowser && logInBrowser('XX: ' + JSON.stringify(json))
                     eval(json.seleniumplugin);
-                    logInBrowser && logInBrowser('XX: before eval requirement')
                     eval('var requirement=' + json.requirement);
-                    logInBrowser && logInBrowser('XX: before delete')
                     delete json.seleniumplugin;
                     var cb=arguments[arguments.length-1];
-                    logInBrowser && logInBrowser('XX: req is fn: ' + (typeof requirement==='function'))
                     selenium.subscribe(
                         json.name,
                         (typeof requirement==='function') ?
                             function(data){
-                                logInBrowser && logInBrowser('XX: inside fn, data: ', JSON.stringify(data))
-                                logInBrowser && logInBrowser('XX: json: ' + JSON.stringify(json))
                                 if(requirement(data,json.dataForRequirement)){
-                                    logInBrowser && logInBrowser('XX: req() return true')
                                     cb(data)
                                 }
-
-                                setTimeout(cb, 5000, 'executeAsyncScript failed' + "\n" + document.querySelector('pre').innerText);
                             }:cb,
                         // data => cb({
                         //     data:data,
@@ -399,7 +388,7 @@ module.exports = (async function () {
                 }
             );
 
-            promise.then(data => log.dump(data), e => {
+            promise.catch(e => {
                 process.stdout.write('waitForCustomEvent: ' + "\n");
                 log.dump(e)
             })
