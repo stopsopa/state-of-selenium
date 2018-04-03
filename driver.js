@@ -371,6 +371,8 @@ module.exports = (async function () {
                                     logInBrowser && logInBrowser('XX: req() return true')
                                     cb(data)
                                 }
+
+                                setTimeout(cb, 5000, 'executeAsyncScript failed' + "\n" + document.querySelector('pre').innerText);
                             }:cb,
                         // data => cb({
                         //     data:data,
