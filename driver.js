@@ -350,6 +350,8 @@ module.exports = (async function () {
                 requirement = false;
             }
 
+            log('before executeAsync');
+
             const promise = driver.executeAsyncScript(
                 function(json){
                     logInBrowser && logInBrowser('XX: before json eval')
@@ -389,7 +391,7 @@ module.exports = (async function () {
                 }
             );
 
-            promise.catch(e => {
+            promise.then(data => log.dump(data), e => {
                 process.stdout.write('waitForCustomEvent: ' + "\n");
                 log.dump(e)
             })
