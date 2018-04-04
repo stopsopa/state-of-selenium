@@ -83,6 +83,7 @@ module.exports = (async function () {
         /**
          * https://saucelabs.com/platforms
          * https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/ g(Platform Configurator)
+         * https://wiki.saucelabs.com/display/DOCS/Node.js+Test+Setup+Example
          * caps = {};
          caps['browserName'] = 'chrome';
          caps['platform'] = 'Windows 10';
