@@ -45,7 +45,7 @@ node node_modules/.bin/jest $@ --verbose --runInBand
 #                                 Run tests that match this spec name (match against the name in describe or test, basically).
 #           from : https://facebook.github.io/jest/docs/en/cli.html
 #       example:
-#           /bin/bash test.sh -t="redirection\s2"
+#           /bin/bash run.sh -t="redirection\s2"
 
 
 STATUS=$?

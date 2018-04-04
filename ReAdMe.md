@@ -6,7 +6,7 @@
     yarn server
     
     # in another console
-    /bin/bash test.sh
+    /bin/bash run.sh
     
 to stop selenium server
 
