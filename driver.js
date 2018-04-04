@@ -54,6 +54,8 @@ else {
 module.exports = (async function () {
 
     let driver;
+    
+    jest.setTimeout(20000); // this works (1)
 
     try {
 
