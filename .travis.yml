@@ -10,7 +10,7 @@ env:
 
     - PLATFORM="Windows 10"
     - BROWSER="chrome"
-    - VERSION="65.0
+    - VERSION="65.0"
     
     # https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
 #  matrix:
