@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=master)](https://travis-ci.org/stopsopa/state-of-selenium)
+[![Build Status](https://saucelabs.com/buildstatus/stopsopa-test)](https://saucelabs.com/beta/builds/a47e8d511f124186a82f229cee585087)
+
 
 # how to use
 
