@@ -5,7 +5,7 @@ const { By, promise } = require('selenium-webdriver');
 
 const log = require('../../lib/logn');
 
-describe('js-click', async () => {
+describe('user', async () => {
 
     let driver;
 
