@@ -11,9 +11,9 @@ env:
     - PLATFORM="Windows 10"
     - BROWSER="chrome"
     - VERSION="65.0
-
-  matrix:
+    
     # https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+#  matrix:
 #    - PLATFORM="macOS 10.12"  BROWSER="chrome"            VERSION="65.0"
 #    - PLATFORM="macOS 10.13"  BROWSER="chrome"            VERSION="65.0"
 #    - PLATFORM="macOS 10.12"  BROWSER="firefox"           VERSION="59.0"
@@ -23,18 +23,6 @@ env:
 #    - PLATFORM="Windows 10"   BROWSER="firefox"           VERSION="59.0"
 #    - PLATFORM="Windows 10"   BROWSER="MicrosoftEdge"     VERSION="16.16299"
 #    - PLATFORM="Windows 10"   BROWSER="internet explorer" VERSION="11.103"
-
-#  matrix:
-#    # https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
-#    - PLATFORM="macOS 10.12"  BROWSER="chrome"            VERSION="65.0"
-#    - PLATFORM="macOS 10.13"  BROWSER="chrome"            VERSION="65.0"
-##    - PLATFORM="macOS 10.12"  BROWSER="firefox"           VERSION="59.0"
-##    - PLATFORM="macOS 10.13"  BROWSER="firefox"           VERSION="59.0"
-#
-#    - PLATFORM="Windows 10"   BROWSER="chrome"            VERSION="65.0"
-##    - PLATFORM="Windows 10"   BROWSER="firefox"           VERSION="59.0"
-##    - PLATFORM="Windows 10"   BROWSER="MicrosoftEdge"     VERSION="16.16299"
-##    - PLATFORM="Windows 10"   BROWSER="internet explorer" VERSION="11.103"
 
 before_script:
   - curl -v https://saucelabs.com/ -I
