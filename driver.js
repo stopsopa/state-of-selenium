@@ -93,7 +93,7 @@ module.exports = (async function () {
          */
         driver = await new Builder()
             .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-            .forBrowser(browser, platform, version) // local instance of node don't care about platform & version, but saucelabs do
+            .forBrowser(browser, version, platform) // local instance of node don't care about platform & version, but saucelabs do
             // .forBrowser(Browser.CHROME)
             .setChromeOptions(
                 new chrome
