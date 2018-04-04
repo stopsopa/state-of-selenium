@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=master)](https://travis-ci.org/stopsopa/state-of-selenium)
 [![Build Status](https://saucelabs.com/buildstatus/stopsopa-test)](https://saucelabs.com/beta/builds/a47e8d511f124186a82f229cee585087)
 
-|||
-|--|--|
-|[macOS High Sierra - Chrome](https://github.com/stopsopa/state-of-selenium/blob/chrome-machs/.travis.yml#L11)|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-machs)](https://travis-ci.org/stopsopa/state-of-selenium)|
-|[macOS Sierra - Chrome](https://github.com/stopsopa/state-of-selenium/blob/chrome-macsi/.travis.yml#L11)|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-macsi)](https://travis-ci.org/stopsopa/state-of-selenium)|
-|[Windows 10 - Chrome](https://github.com/stopsopa/state-of-selenium/blob/chrome-win10/.travis.yml#L11)|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-win10)](https://travis-ci.org/stopsopa/state-of-selenium)|
+||||
+|--|--|--|
+|[macOS High Sierra](https://github.com/stopsopa/state-of-selenium/blob/chrome-machs/.travis.yml#L11)|Chrome|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-machs)](https://travis-ci.org/stopsopa/state-of-selenium)|
+|[macOS Sierra](https://github.com/stopsopa/state-of-selenium/blob/chrome-macsi/.travis.yml#L11)|Chrome|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-macsi)](https://travis-ci.org/stopsopa/state-of-selenium)|
+|[Windows 10](https://github.com/stopsopa/state-of-selenium/blob/chrome-win10/.travis.yml#L11)|Chrome|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-win10)](https://travis-ci.org/stopsopa/state-of-selenium)|
 
 # how to use
 
