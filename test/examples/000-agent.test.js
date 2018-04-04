@@ -3,6 +3,8 @@ const path = require('path');
 
 const { By, promise } = require('selenium-webdriver');
 
+const log = require('../../lib/logn');
+
 describe('js-click', async () => {
 
     let driver;
@@ -12,18 +14,27 @@ describe('js-click', async () => {
         driver = await require(path.resolve(__dirname, '..', '..', 'driver.js'));
     });
 
-    it('nong', async () => {
+    it('agent', async () => {
 
          // https://stopsopa.github.io/research-protractor/e2e/angular-calc/calc.html
         await driver.getTestServer('/web/001-js-click/index.html');
 
-        let button = await driver.findElement(By.id('go'));
+        const agent = await driver.waitForJs(() => {
 
-        let div = await driver.findElement(By.css('div'));
+            try {
 
-        await button.click();
+                return navigator.userAgent;
+            }
+            catch (e) {}
 
-        expect(await div.getText()).toBe('clicked');
+            return false;
+        }, null, 1000);
+
+        expect(agent.length).toBeGreaterThan(0);
+
+        log('navigator.userAgent');
+
+        log.dump(agent);
     });
 
     afterAll(async () => {
