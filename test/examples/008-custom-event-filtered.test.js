@@ -87,7 +87,7 @@ describe('008-custom-event-filtered', async () => {
         // : {"subscribe_triggered_permanent":{"value_to_test":"fake previous remaining event"}}
         // : change triggered, but wait...two
         // : {"subscribe_triggered_permanent":{"value_to_test":"fake previous remaining event"}}
-        // : {"subscribe_triggered":{"value_to_test":"fake previous remaining event"}}< len: 575
+        // : {"subscribe_triggered":{"value_to_test":"fake previous remaining event"}}< len: 575  -- without last line
 
         expect(text).toMatchSnapshot()
 

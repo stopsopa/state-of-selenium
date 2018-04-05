@@ -7,6 +7,5 @@ exports[`008-custom-event-filtered test selenium.js itself 1`] = `
 : {\\"subscribe_triggered_permanent\\":{\\"value_to_test\\":\\"the event that we waiting for: two\\"}}
 : {\\"subscribe_triggered_permanent\\":{\\"value_to_test\\":\\"fake previous remaining event\\"}}
 : change triggered, but wait...two
-: {\\"subscribe_triggered_permanent\\":{\\"value_to_test\\":\\"fake previous remaining event\\"}}
-: {\\"subscribe_triggered\\":{\\"value_to_test\\":\\"fake previous remaining event\\"}}"
+: {\\"subscribe_triggered_permanent\\":{\\"value_to_test\\":\\"fake previous remaining event\\"}}"
 `;
