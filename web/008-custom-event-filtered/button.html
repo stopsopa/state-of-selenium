@@ -38,9 +38,11 @@
                 value_to_test: 'fake previous remaining event'
             });
 
-            selenium.subscribe(event_name, data => logInBrowser(JSON.stringify({subscribe_triggered:data})));
-
+            // this will NOT remove data from selenium_d
             selenium.subscribe(event_name, data => logInBrowser(JSON.stringify({subscribe_triggered_permanent:data})), true);
+
+            // this will remove data from selenium_d - that's why i can't subscribe here because i need it to trigger test subscription
+            // selenium.subscribe(event_name, data => logInBrowser(JSON.stringify({subscribe_triggered:data})));
 
             document.querySelector('button').addEventListener('click', e => {
 
@@ -52,7 +54,7 @@
                         value_to_test: 'the event that we waiting for: ' + e.target.innerText
                     });
 
-                    selenium.subscribe(event_name, data => logInBrowser(JSON.stringify({subscribe_triggered:data})));
+                    selenium.subscribe(event_name, data => logInBrowser(JSON.stringify({subscribe_triggered:data})), true);
 
                     logInBrowser('... but action was done now')
                 }, 1000);
