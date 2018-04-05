@@ -26,7 +26,7 @@ const log = require(path.resolve(__dirname, '.', 'lib', 'logn'));
 
 // require(path.resolve(__dirname, '..', 'lib', 'rootrequire'))(__dirname, '..');
 
-const {Builder, By, Key, until, promise, Browser, Platform } = require('selenium-webdriver');
+const {Builder, By, Key, until, promise, Browser, Platform, Capabilities } = require('selenium-webdriver');
 const chrome    = require('selenium-webdriver/chrome');
 const Options   = chrome.Options;
 // const edge      = require('selenium-webdriver/edge');
@@ -111,6 +111,8 @@ module.exports = (async function () {
                         width: config.width,
                         height: config.height
                     })
+                    //     .addArguments('--incognito')
+                    .addArguments('--start-maximized')
 
                 // available devices, source code of chromium project
                 // current version: https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json
@@ -123,10 +125,10 @@ module.exports = (async function () {
             //     //.headless()
             //         .windowSize({config.width, config.height})
             // )
-            .setChromeService(
-                new chrome.ServiceBuilder()
-                    .enableVerboseLogging()
-                    .setStdio('inherit'))
+            // .setChromeService(
+            //     new chrome.ServiceBuilder()
+            //         .enableVerboseLogging()
+            //         .setStdio('inherit'))
             // .setEdgeService(
             //     process.platform === 'win32'
             //         ? new edge.ServiceBuilder()
@@ -434,6 +436,23 @@ module.exports = (async function () {
             return promise;
         };
     }());
+
+
+    // function scrollTo(element, to, duration) {
+    //     if (duration <= 0) return;
+    //     var difference = to - element.scrollTop;
+    //     var perTick = difference / duration * 10;
+    //
+    //     setTimeout(function() {
+    //         element.scrollTop = element.scrollTop + perTick;
+    //         if (element.scrollTop === to) return;
+    //         scrollTo(element, to, duration - 10);
+    //     }, 10);
+    // }
+    driver.scrollTo = y => driver.waitForJs(y => {
+        document.body.scrollTop = document.documentElement.scrollTop = y;
+        return true;
+    }, y)
 
     driver.waitForJs = (fn, data, interval = 300) => {
 
