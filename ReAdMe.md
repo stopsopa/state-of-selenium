@@ -60,3 +60,7 @@ http://www.protractortest.org/#/control-flow#disabling-the-control-flow
 # more about testing in general:
     
 * http://blog.thecodewhisperer.com/permalink/integrated-tests-are-a-scam
+
+# tracking W3C coverage:
+
+- https://developer.mozilla.org/en-US/docs/Mozilla/QA/Marionette/WebDriver/status
