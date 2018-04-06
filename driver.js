@@ -454,7 +454,7 @@ module.exports = (async function () {
         return true;
     }, y)
 
-    driver.waitForJs = (fn, data, interval = 300) => {
+    driver.waitForJs = (fn, data, interval = 300, init) => {
 
         if (interval < 3) {
 
@@ -466,52 +466,96 @@ module.exports = (async function () {
             throw `waitForJs: 'fn' should be bigger function or strings`;
         }
 
+        const opt = {
+            fn      : fn.toString(),
+            interval,
+            data
+        };
+
+        if (typeof init === 'function') {
+
+            opt.init    = init.toString();
+        }
+
         if (typeof fn === 'string') {
 
             try {
+
                 eval('const tmp = ' + fn);
 
-                if (typeof tmp !== 'function') {
-
-                    throw `waitForJs: 'fn' after evaluation is not function`;
-                }
+                fn = tmp;
             }
             catch (e) {
 
-                throw `waitForJs: evaluation 'fn' parameter from string to function failed`;
+                throw `waitForJs:outside evaluation 'fn' parameter from string to function failed`;
             }
         }
 
+        if (typeof fn !== 'function') {
+
+            throw `waitForJs:outside 'fn' after evaluation is not function`;
+        }
+
+        /**
+         * https://skalman.github.io/UglifyJS-online/
+         */
         const promise = driver.executeAsyncScript(
-            function(json){eval('var fn='+json.fn);var cb = arguments[arguments.length - 1];var handler;function test(){let result;try{result = fn(json.data)}catch(e){clearInterval(handler);return cb({__origin__:'waitForJs',string:e.toString(),fileName:e.fileName, stack:e.stack,columnNumber:e.columnNumber})}if(result){clearInterval(handler);cb(result)}};handler=setInterval(test,json.interval);test()},
+            function(json){var cb=arguments[arguments.length-1],carry={},handler,tmp;if(eval("var fn = "+json.fn),"function"!=typeof fn)return cb({__origin__:"waitForJs:eval:fn",string:"'fn' after evaluation is not function"});if(json.init){if(eval("var _init = "+json.init),"function"!=typeof _init)return cb({__origin__:"waitForJs:eval:_init",string:"'_init' after evaluation is not function"});_init(carry)}function test(){let n;try{n=fn(json.data,carry)}catch(n){return clearInterval(handler),cb({__origin__:"waitForJs:general",string:n.toString(),fileName:n.fileName,stack:n.stack,columnNumber:n.columnNumber})}n&&(clearInterval(handler),cb(n))}handler=setInterval(test,json.interval),test()},
 
             // implementation for testing
             // function (json) {
             //
-            //     logInBrowser('executed');
+            //     // logInBrowser('executed');
+            //
+            //     var cb = arguments[arguments.length - 1];
+            //
+            //     var carry = {};
             //
             //     eval('var fn = ' + json.fn);
             //
-            //     var cb = arguments[arguments.length - 1];
+            //     if (typeof fn !== 'function') {
+            //
+            //         return cb({
+            //             __origin__      : 'waitForJs:eval:fn',
+            //             string          : `'fn' after evaluation is not function`
+            //         });
+            //     }
+            //
+            //     if (json.init) {
+            //
+            //         eval('var _init = ' + json.init);
+            //
+            //         if (typeof _init !== 'function') {
+            //
+            //             return cb({
+            //                 __origin__      : 'waitForJs:eval:_init',
+            //                 string          : `'_init' after evaluation is not function`
+            //             });
+            //         }
+            //
+            //         // logInBrowser('init');
+            //
+            //         _init(carry);
+            //     }
             //
             //     var handler, tmp;
             //
             //     function test() {
             //
-            //         logInBrowser(JSON.stringify(json.data))
+            //         // logInBrowser(JSON.stringify(json.data))
             //
-            //         let result
+            //         let result;
             //
             //         try {
             //
-            //             result = fn(json.data);
+            //             result = fn(json.data, carry);
             //         }
             //         catch (e) {
             //
             //             clearInterval(handler);
             //
             //             return cb({
-            //                 __origin__      : 'waitForJs',
+            //                 __origin__      : 'waitForJs:general',
             //                 string          : e.toString(),
             //                 fileName        : e.fileName,
             //                 stack           : e.stack,
@@ -531,22 +575,17 @@ module.exports = (async function () {
             //
             //     test();
             // },
-            {
-                fn: fn.toString(),
-                interval,
-                data
-            }
-            )
-                .then(result => {
+            opt
+        )
+            .then(result => {
 
-                    if (result && result.__origin__ === 'waitForJs') {
+                if ( result && result.__origin__ && result.__origin__.indexOf('waitForJs:') === 0 ) {
 
-                        return Promise.reject(result);
-                    }
+                    return Promise.reject(result);
+                }
 
-                    return result;
-                })
-        ;
+                return result;
+            });
 
         promise.catch(e => {
             process.stdout.write('waitForCustomEvent: ' + "\n");
@@ -554,7 +593,7 @@ module.exports = (async function () {
         })
 
         return promise;
-    }
+    };
 
     driver.json = data => stringify(data)
 

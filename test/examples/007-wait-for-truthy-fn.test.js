@@ -24,18 +24,18 @@ describe('ng-calc', async () => {
 
         // try {
 
-            var json = await driver.waitForJs(data => {
+        var json = await driver.waitForJs(data => {
 
-                const test = document.querySelectorAll('li').length > 3;
+            const test = document.querySelectorAll('li').length > 3;
 
-                if (test) {
+            if (test) {
 
-                    data.result = test ? 'true' : 'false';
+                data.result = test ? 'true' : 'false';
 
-                    return data
-                }
+                return data
+            }
 
-            }, {}, 300);
+        }, {}, 300);
         // }
         // catch (e) {
         //
@@ -92,7 +92,28 @@ describe('ng-calc', async () => {
 
         expect(json.result).toBe('true');
 
-    }, 4000);
+    }, 14000);
+
+    test('wait-for-js - init', async () => {
+
+        await driver.getTestServer('/web/006-wait-custom-event/inline.html');
+
+        const data = await driver.waitForJs((data, carry) => {
+            logInBrowser('test ' + JSON.stringify(carry))
+            return carry.inc || false;
+        }, {}, 150, carry => {
+            logInBrowser('init')
+            setTimeout(() => {
+                logInBrowser('init - inside ' + JSON.stringify(carry))
+                carry.inc = carry.inc || 5;
+                carry.inc += 1;
+            }, 2000);
+        });
+
+        expect(data).toBe(6);
+
+        await driver.sleepSec(3);
+    });
 
     afterAll(async () => {
         await driver.quit();
