@@ -53,6 +53,10 @@ else
 
     echo -e "\n\n    Test failed anyway after attempt to restart - please check it manually, I give up :/ \n\n"
 
+    exit 1
+
 fi
+
+node node_modules/.bin/jest test/warmingup.js --verbose --runInBand 1>> /dev/null 2>> /dev/null
 
 

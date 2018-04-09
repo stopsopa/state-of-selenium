@@ -18,9 +18,24 @@ if [ "$1" = "--help" ]; then
     /bin/bash $0 --watchAll
 
 # run only one or matching test
-    /bin/bash $0 test/veg.test.js
+    /bin/bash $0 /veg.test.js
     /bin/bash $0 test/*e*.test.js
     /bin/bash $0 "[^a-z]tea"
+
+# filtering tests by specific filename pattern or test name pattern
+    /bin/bash $0 -t 'dbnochange'
+    /bin/bash $0 test/project/front/page.test.js -t 'dbchange'
+
+# run selenium server locally
+    make sel
+
+# stopping local selenium sever
+    make sels
+
+# sequence of testing selenium testing tools itself
+    make test-server
+    node node_modules/.bin/jest test/examples/ --verbose --runInBand;echo -e "\n\ntests $([ $? == 0 ] && echo "passed" || echo "failed")\n\n"
+
 EOF
 
     exit 0;
@@ -34,10 +49,8 @@ echo -e "\n ┌─────────────────────�
 echo -e " │ sequence of checking || running local selenium server before tests │ "
 echo -e " └────────────────────────────────────────────────────────────────────┘\n\n"
 
-#node node_modules/.bin/jest $@ --verbose --runInBand --modulePathIgnorePatterns "test/examples" "test/minefield"
-
-node node_modules/.bin/jest $@ --verbose --runInBand
-
+node node_modules/.bin/jest $@ --verbose --runInBand --modulePathIgnorePatterns "test/examples" "test/minefield"
+#node node_modules/.bin/jest $@ --verbose --runInBand
 #node node_modules/.bin/jest -t="redirection 2" --runInBand --modulePathIgnorePatterns "test/examples"
 
 # other useful options
@@ -46,7 +59,6 @@ node node_modules/.bin/jest $@ --verbose --runInBand
 #           from : https://facebook.github.io/jest/docs/en/cli.html
 #       example:
 #           /bin/bash run.sh -t="redirection\s2"
-
 
 STATUS=$?
 
