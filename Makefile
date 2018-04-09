@@ -10,7 +10,7 @@ selenium-stop:
 	/bin/bash local_selenium_server.sh stop
 
 help:
-	/bin/bash run.sh --help
+	@/bin/bash run.sh --help
 
 test-server:
 	yarn server
