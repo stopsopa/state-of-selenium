@@ -53,142 +53,165 @@ else {
 
 module.exports = (async function () {
 
-    let driver;
-    
     jest.setTimeout(20000); // this works (1)
 
-    try {
+    let driver = await new Promise((resolve, reject) => {
 
-        let browser = Browser.CHROME;
+        setTimeout(reject, 5000, 'creating driver timeout');
 
-        let platform = 'macOS 10.12';
+        (async function tryagain() {
 
-        let version = '65.0';
+            process.stdout.write(`attempt to create driver:\n`);
 
-        if (process.env.BROWSER) {
+            let driver;
 
-            browser = process.env.BROWSER;
-        }
+            try {
 
-        if (process.env.PLATFORM) {
+                let browser = Browser.CHROME;
 
-            platform = process.env.PLATFORM;
-        }
+                let platform = 'macOS 10.12';
 
-        if (process.env.VERSION) {
+                let version = '65.0';
 
-            version = process.env.VERSION;
-        }
+                if (process.env.BROWSER) {
 
-        /**
-         * https://saucelabs.com/platforms
-         * https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/ g(Platform Configurator)
-         * https://wiki.saucelabs.com/display/DOCS/Node.js+Test+Setup+Example
-         * caps = {};
-         caps['browserName'] = 'chrome';
-         caps['platform'] = 'Windows 10';
-         caps['version'] = '65.0';
+                    browser = process.env.BROWSER;
+                }
+
+                if (process.env.PLATFORM) {
+
+                    platform = process.env.PLATFORM;
+                }
+
+                if (process.env.VERSION) {
+
+                    version = process.env.VERSION;
+                }
+
+                /**
+                 * https://saucelabs.com/platforms
+                 * https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/ g(Platform Configurator)
+                 * https://wiki.saucelabs.com/display/DOCS/Node.js+Test+Setup+Example
+                 * caps = {};
+                 caps['browserName'] = 'chrome';
+                 caps['platform'] = 'Windows 10';
+                 caps['version'] = '65.0';
 
 
-         caps['browserName'] = 'chrome';
-         caps['platform'] = 'macOS 10.12';
-         caps['version'] = '65.0';
-         */
-        driver = await new Builder()
-            .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-            // .forBrowser(browser, version, platform) // local instance of node don't care about platform & version, but saucelabs do
-            // .forBrowser(Browser.CHROME)
-            .withCapabilities({
-                'browserName': browser,
-                'platform': platform,
-                'version': version,
-            })
-            .setChromeOptions(
-                new chrome
-                    .Options()
-                // .headless()
-                    .windowSize({
-                        width: config.width,
-                        height: config.height
+                 caps['browserName'] = 'chrome';
+                 caps['platform'] = 'macOS 10.12';
+                 caps['version'] = '65.0';
+                 */
+                driver = await new Builder()
+                    .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
+                    // .forBrowser(browser, version, platform) // local instance of node don't care about platform & version, but saucelabs do
+                    // .forBrowser(Browser.CHROME)
+                    .withCapabilities({
+                        'browserName': browser,
+                        'platform': platform,
+                        'version': version,
                     })
-                    //     .addArguments('--incognito')
-                    .addArguments('--start-maximized')
+                    .setChromeOptions(
+                        new chrome
+                            .Options()
+                        // .headless()
+                            .windowSize({
+                                width: config.width,
+                                height: config.height
+                            })
+                            //     .addArguments('--incognito')
+                            .addArguments('--start-maximized')
 
-                // available devices, source code of chromium project
-                // current version: https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json
-                // older version: https://chromium.googlesource.com/chromium/src/+/ba858f4acbb01a224f03c5c19b392b94aae0ef91/third_party/WebKit/Source/devtools/front_end/toolbox/OverridesUI.js
-                // new Options().setMobileEmulation({deviceName: "iPhone 6"}) // from 4 up to 6
-            )
-            // .setFirefoxOptions(
-            //     new firefox
-            //         .Options()
-            //     //.headless()
-            //         .windowSize({config.width, config.height})
-            // )
-            // .setChromeService(
-            //     new chrome.ServiceBuilder()
-            //         .enableVerboseLogging()
-            //         .setStdio('inherit'))
-            // .setEdgeService(
-            //     process.platform === 'win32'
-            //         ? new edge.ServiceBuilder()
-            //             .enableVerboseLogging()
-            //             .setStdio('inherit')
-            //         : null)
-            // .setFirefoxService(
-            //     new firefox.ServiceBuilder()
-            //         .enableVerboseLogging()
-            //         .setStdio('inherit'))
-            .build()
-        ;
+                        // available devices, source code of chromium project
+                        // current version: https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json
+                        // older version: https://chromium.googlesource.com/chromium/src/+/ba858f4acbb01a224f03c5c19b392b94aae0ef91/third_party/WebKit/Source/devtools/front_end/toolbox/OverridesUI.js
+                        // new Options().setMobileEmulation({deviceName: "iPhone 6"}) // from 4 up to 6
+                    )
+                    // .setFirefoxOptions(
+                    //     new firefox
+                    //         .Options()
+                    //     //.headless()
+                    //         .windowSize({config.width, config.height})
+                    // )
+                    // .setChromeService(
+                    //     new chrome.ServiceBuilder()
+                    //         .enableVerboseLogging()
+                    //         .setStdio('inherit'))
+                    // .setEdgeService(
+                    //     process.platform === 'win32'
+                    //         ? new edge.ServiceBuilder()
+                    //             .enableVerboseLogging()
+                    //             .setStdio('inherit')
+                    //         : null)
+                    // .setFirefoxService(
+                    //     new firefox.ServiceBuilder()
+                    //         .enableVerboseLogging()
+                    //         .setStdio('inherit'))
+                    .build()
+                ;
 
-        // // await driver.get('http://www.google.com/ncr');
-        // //
-        // // await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
-        // //
-        // // await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
-        // //
-        // // await promise.delayed(2000);
-        // // const sec = await wait(10).catch(e => log('err', e));
-        //
-        // await driver.get('https://stopsopa.github.io/research-protractor/e2e/ng.html');
-        //
-        //
-        // let button = await driver.findElement(By.id('go'));
-        //
-        // let div = await driver.findElement(By.css('div'));
-        //
-        // // await driver.actions({bridge: true}).click(button).perform(); // more complicated way
-        //
-        // await button.click();
-        //
-        // const html = await div.getText();
-        //
-        // await promise.delayed(2000);
-        //
-        // console.log('test 1', html === 'clicked' ? 'true' : 'false')
+                // log("\n-".repeat(20))
+                // log.dump(typeof driver);
+
+                // // await driver.get('http://www.google.com/ncr');
+                // //
+                // // await driver.findElement(By.name('q')).sendKeys('webdriver', Key.RETURN);
+                // //
+                // // await driver.wait(until.titleIs('webdriver - Google Search'), 1000);
+                // //
+                // // await promise.delayed(2000);
+                // // const sec = await wait(10).catch(e => log('err', e));
+                //
+                // await driver.get('https://stopsopa.github.io/research-protractor/e2e/ng.html');
+                //
+                //
+                // let button = await driver.findElement(By.id('go'));
+                //
+                // let div = await driver.findElement(By.css('div'));
+                //
+                // // await driver.actions({bridge: true}).click(button).perform(); // more complicated way
+                //
+                // await button.click();
+                //
+                // const html = await div.getText();
+                //
+                // await promise.delayed(2000);
+                //
+                // console.log('test 1', html === 'clicked' ? 'true' : 'false')
 
 
-    } catch (e) {
-        log.dump('e', e, e.message)
-    }
-    finally {
+            } catch (e) {
+                log('e'.repeat(1000))
+                log.dump(e)
+                log.dump(e.message)
+            }
+            // finally {
 
-        // const timeout = 20000;
-        //
-        // setTimeout(async () => {
-        //
-        //     log('stop after fix aboumt of time: ' + timeout);
-        //
-        //     await driver.quit();
-        //
-        // }, timeout)
-    }
+            // const timeout = 20000;
+            //
+            // setTimeout(async () => {
+            //
+            //     log('stop after fix aboumt of time: ' + timeout);
+            //
+            //     await driver.quit();
+            //
+            // }, timeout)
+            // }
 
-    if ( ! driver ) {
+            if ( driver ) {
 
-        throw "driver.js: driver object was not created ...";
-    }
+                process.stdout.write(`driver created...\n`)
+
+                return resolve(driver);
+            }
+
+            log("driver.js: driver object was not created ...");
+
+            // reject(null);
+            setTimeout(tryagain, 1000);
+        })();
+
+    });
 
     driver.config = config;
 
@@ -594,6 +617,11 @@ module.exports = (async function () {
 
         return promise;
     };
+
+
+
+
+
 
     driver.json = data => stringify(data)
 
