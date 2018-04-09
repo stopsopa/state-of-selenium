@@ -121,8 +121,8 @@ module.exports = (async function () {
                                 width: config.width,
                                 height: config.height
                             })
-                            //     .addArguments('--incognito')
-                            .addArguments('--start-maximized')
+                        // .addArguments('--incognito')
+                        // .addArguments('--start-maximized')
 
                         // available devices, source code of chromium project
                         // current version: https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json
