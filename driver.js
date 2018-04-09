@@ -206,6 +206,7 @@ module.exports = (async function () {
             }
 
             log("driver.js: driver object was not created ...");
+            log.dump(typeof driver);
 
             // reject(null);
             setTimeout(tryagain, 1000);
