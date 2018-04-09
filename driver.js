@@ -57,13 +57,25 @@ module.exports = (async function () {
 
     jest.setTimeout(20000); // this works (1)
 
+    function unique(pattern) { // node.js require('crypto').randomBytes(16).toString('hex');
+        pattern || (pattern = 'xyxyxy');
+        return pattern.replace(/[xy]/g,
+            function(c) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    }
+
     let driver = await new Promise((resolve, reject) => {
 
-        setTimeout(reject, 15000, "\n\n" + time() + ' - creating driver timeout' + "\n\n");
+        const un = unique() + ' ';
+
+        const handler = setTimeout(reject, 15000, "\n\n" + un + time() + ' - creating driver timeout' + "\n\n");
 
         (async function tryagain() {
 
-            process.stdout.write("\n\n" + time() + ` - attempt to create driver:` + "\n\n");
+            process.stdout.write("\n\n" + un + time() + ` - attempt to create driver:` + "\n\n");
 
             let driver;
 
@@ -152,7 +164,7 @@ module.exports = (async function () {
                     .build()
                 ;
 
-                process.stdout.write(`\n\n\n`+time() + ' - after creating driver' + "\n\n");
+                process.stdout.write(`\n\n\n`+un + time() + ' - after creating driver' + "\n\n");
 
                 // log("\n-".repeat(20))
                 // log.dump(typeof driver);
@@ -204,12 +216,14 @@ module.exports = (async function () {
 
             if ( driver ) {
 
-                process.stdout.write(`\n\n\n`+time() + ` - driver created...\n` + "\n\n")
+                process.stdout.write(`\n\n\n`+un + time() + ` - driver created...\n` + "\n\n")
+
+                clearTimeout(handler);
 
                 return resolve(driver);
             }
 
-            process.stdout.write(time() + ' - driver.js: driver object was not created ...' + "\n\n");
+            process.stdout.write(un + time() + ' - driver.js: driver object was not created ...' + "\n\n");
             process.stdout.write(typeof driver);
             process.stdout.write("\n\n");
 
