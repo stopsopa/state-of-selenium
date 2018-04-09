@@ -51,17 +51,19 @@ else {
     endpoint = `http://${config.node.host}:${config.node.port}/wd/hub`;
 }
 
+const time = () => (new Date()).toISOString().substring(0, 19).replace('T', ' ');
+
 module.exports = (async function () {
 
     jest.setTimeout(20000); // this works (1)
 
     let driver = await new Promise((resolve, reject) => {
 
-        setTimeout(reject, 5000, 'creating driver timeout');
+        setTimeout(reject, 15000, "\n\n" + time() + ' - creating driver timeout' + "\n\n");
 
         (async function tryagain() {
 
-            process.stdout.write(`attempt to create driver:\n`);
+            process.stdout.write("\n\n" + time() + ` - attempt to create driver:` + "\n\n");
 
             let driver;
 
@@ -150,6 +152,8 @@ module.exports = (async function () {
                     .build()
                 ;
 
+                process.stdout.write(`\n\n\n`+time() + ' - after creating driver' + "\n\n");
+
                 // log("\n-".repeat(20))
                 // log.dump(typeof driver);
 
@@ -200,12 +204,12 @@ module.exports = (async function () {
 
             if ( driver ) {
 
-                process.stdout.write(`driver created...\n`)
+                process.stdout.write(`\n\n\n`+time() + ` - driver created...\n` + "\n\n")
 
                 return resolve(driver);
             }
 
-            log("driver.js: driver object was not created ...");
+            log(time() + ' - driver.js: driver object was not created ...' + "\n\n");
             log.dump(typeof driver);
 
             // reject(null);
