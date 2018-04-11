@@ -121,7 +121,7 @@ module.exports = (async function () {
                     .forBrowser(browserName, version, platform) // local instance of node don't care about platform & version, but saucelabs do
                     // .forBrowser(Browser.CHROME)
                     .withCapabilities({
-                        'browserName': browser,
+                        'browserName': browserName,
                         'platform': platform,
                         'version': version,
                     })
