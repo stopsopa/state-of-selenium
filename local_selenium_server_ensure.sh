@@ -57,6 +57,6 @@ else
 
 fi
 
-node node_modules/.bin/jest test/warmingup.js --verbose --runInBand 1>> /dev/null 2>> /dev/null
+node node_modules/.bin/jest test/warmingup.js --verbose --runInBand
 
 
