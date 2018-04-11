@@ -66,12 +66,14 @@ EOF
         -hubConfig hubConfig.json \
     & disown
 
+    sleep 3
+
     java -jar selenium-server-standalone-3.4.0.jar \
         -role node \
         -port $NODE_PORT \
         -host $NODE_HOST \
         -hub http://$HUB_HOST:$HUB_PORT/grid/register \
-        -browser "browserName=chrome, maxInstances=10, platform=SIERRA" \
+        -browser "browserName=$BROWSER_NAME, version=$BROWSER_VERSION, maxInstances=$BROWSER_MAXINST, platform=$BROWSER_PLATFORM" \
     & disown
 
 #    java -jar selenium-server-standalone-3.4.0.jar -role node -port 5555 -host 127.0.0.1 -hub http://localhost:4444/grid/register -browser "browserName=chrome, maxInstances=10, platform=SIERRA" -browser "browserName=firefox, maxInstances=10, platform=SIERRA" -browser "browserName=safari, maxInstances=10, platform=SIERRA" & disown
