@@ -3,6 +3,10 @@ const path = require('path');
 
 const { By, promise } = require('selenium-webdriver');
 
+const log = require('../lib/logn');
+
+const logn = (...args) => log.stack(2).log(...args, "\n");
+
 describe('js-click', async () => {
 
     let driver;
@@ -14,7 +18,9 @@ describe('js-click', async () => {
 
     it('warmingup', async () => {
 
-        await driver.getTestServer('/web/warmingup.html');
+        const html = path.resolve(__dirname, '..', 'web', 'warmingup.html');
+
+        await driver.get(`file://${html}`);
 
         const data = await driver.waitForCustomEvent('warmingup');
 

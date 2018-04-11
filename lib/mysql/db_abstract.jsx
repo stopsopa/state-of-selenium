@@ -51,9 +51,11 @@ function values(object) {
         protocol41: true,
     }
  */
-abstract.prototype.query = function (query) {
+abstract.prototype.query = function (query, params = false, opt = {}) {
 
-    var params = (arguments.length > 0) ? arguments[1] : false;
+    opt = {...{
+        foreignKeyCheck: true,
+    }, ...opt}
 
     if (params) {
         if (!isArray(params) && !isObject(params)) {
@@ -103,17 +105,39 @@ abstract.prototype.query = function (query) {
                     reject({message:'connection error', error:error})
                 }
                 else {
-                    connection.query(query, queryParams, function (error, results, fields) {
-                        connection && connection.release();
-                        if (error) {
-                            error.query = query;
-                            error.params = queryParams;
-                            reject({message:'query error', error:error})
-                        }
-                        else {
-                            resolve(results);
-                        }
-                    });
+
+                    var goon = function () {
+
+                        const finish = opt.foreignKeyCheck ? fn => fn() : function (fn) {
+                            connection.query('SET FOREIGN_KEY_CHECKS=1', fn);
+                        };
+
+                        connection.query(query, queryParams, function (error, results, fields) {
+                            connection && connection.release();
+                            if (error) {
+                                error.query = query;
+                                error.params = queryParams;
+                                finish(() => reject({
+                                    message:'query error',
+                                    error:error,
+                                    query: query,
+                                    params: queryParams
+                                }))
+
+                            }
+                            else {
+                                finish(() => resolve(results));
+                            }
+                        });
+                    };
+                    if (opt.foreignKeyCheck) {
+
+                        goon();
+                    }
+                    else {
+
+                        connection.query('SET FOREIGN_KEY_CHECKS=0', goon);
+                    }
                 }
             })
         })
@@ -185,7 +209,7 @@ abstract.prototype.update = function (list, id) {
  */
 abstract.prototype.count = function () {
 
-    var params = (arguments.length > -1) ? arguments[0] : false;
+    var params = (arguments.length > 0) ? arguments[0] : false;
 
     var query = 'SELECT COUNT(*) AS c FROM :table:';
 

@@ -81,15 +81,15 @@ module.exports = (async function () {
 
             try {
 
-                let browser = Browser.CHROME;
+                let browserName     = config.browser.browserName;
 
-                let platform = 'macOS 10.12';
+                let platform        = config.browser.platform;
 
-                let version = '65.0';
+                let version         = config.browser.version;
 
                 if (process.env.BROWSER) {
 
-                    browser = process.env.BROWSER;
+                    browserName = process.env.BROWSER;
                 }
 
                 if (process.env.PLATFORM) {
@@ -118,7 +118,7 @@ module.exports = (async function () {
                  */
                 driver = await new Builder()
                     .usingServer(endpoint) //  to check go to : http://localhost:4444/grid/console?config=true&configDebug=true&refresh=10
-                    // .forBrowser(browser, version, platform) // local instance of node don't care about platform & version, but saucelabs do
+                    .forBrowser(browserName, version, platform) // local instance of node don't care about platform & version, but saucelabs do
                     // .forBrowser(Browser.CHROME)
                     .withCapabilities({
                         'browserName': browser,
@@ -133,8 +133,9 @@ module.exports = (async function () {
                                 width: config.width,
                                 height: config.height
                             })
-                        // .addArguments('--incognito')
-                        // .addArguments('--start-maximized')
+                            // https://youtu.be/NoRYn6gOtVo?t=30m41s
+                            // .addArguments('--incognito')
+                            // .addArguments('--start-maximized')
 
                         // available devices, source code of chromium project
                         // current version: https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json
@@ -161,7 +162,9 @@ module.exports = (async function () {
                     //     new firefox.ServiceBuilder()
                     //         .enableVerboseLogging()
                     //         .setStdio('inherit'))
-                    .build()
+                    .build().catch(err => {
+                        log.dump(err)
+                    })
                 ;
 
                 process.stdout.write(`\n\n\n`+un + time() + ' - after creating driver' + "\n\n");
@@ -200,18 +203,20 @@ module.exports = (async function () {
                 log('e'.repeat(1000))
                 log.dump(e)
                 log.dump(e.message)
+
+                return setTimeout(tryagain, 1000);
             }
             // finally {
 
-            // const timeout = 20000;
-            //
-            // setTimeout(async () => {
-            //
-            //     log('stop after fix aboumt of time: ' + timeout);
-            //
-            //     await driver.quit();
-            //
-            // }, timeout)
+                // const timeout = 20000;
+                //
+                // setTimeout(async () => {
+                //
+                //     log('stop after fix aboumt of time: ' + timeout);
+                //
+                //     await driver.quit();
+                //
+                // }, timeout)
             // }
 
             if ( driver ) {
@@ -313,12 +318,7 @@ module.exports = (async function () {
     }(driver.get));
 
 
-    driver.waitInterval = (condition, timeout, interval = 300, message = undefined) => new Promise((resolve, reject) => {
-
-        if (typeof timeout === 'undefined') {
-
-            timeout = 5000;
-        }
+    driver.waitInterval = (condition, timeout = 10000, interval = 1000, message = undefined) => new Promise((resolve, reject) => {
 
         timeout = parseInt(timeout, 10);
 
@@ -637,6 +637,24 @@ module.exports = (async function () {
 
         return promise;
     };
+
+    /**
+     * <Dropdown data-test="categories" />
+     */
+    driver.semanticOption = async (selectorToDropdown, value) => {
+
+        const categorySelect = await driver.waitForElement(selectorToDropdown);
+
+        await categorySelect.click();
+
+        const categorySelectInput = await driver.waitForElement(`${selectorToDropdown} input`);
+
+        await categorySelectInput.sendKeys(value);
+
+        await driver.sleepSec(0.1);
+
+        await categorySelectInput.sendKeys(Key.ENTER);
+    }
 
 
 

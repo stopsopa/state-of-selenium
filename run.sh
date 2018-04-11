@@ -1,5 +1,11 @@
 #!/bin/bash
 
+THISFILE=${BASH_SOURCE[0]}
+DIR="$( cd "$( dirname "${THISFILE}" )" && pwd -P )"
+echo $DIR;
+
+source "$DIR/config.sh";
+
 function red {
     printf "\e[91m$1\e[0m\n"
 }
@@ -48,6 +54,10 @@ echo -e " └──────────────────────�
 echo -e "\n ┌────────────────────────────────────────────────────────────────────┐"
 echo -e " │ sequence of checking || running local selenium server before tests │ "
 echo -e " └────────────────────────────────────────────────────────────────────┘\n\n"
+
+#export SELENIUM_REMOTE_URL="http://$HUB_HOST:$HUB_PORT/wd/hub"
+#
+#export SELENIUM_BROWSER="$BROWSER_NAME:$BROWSER_VERSION:$BROWSER_PLATFORM"
 
 node node_modules/.bin/jest $@ --verbose --runInBand --modulePathIgnorePatterns "test/examples" "test/minefield"
 #node node_modules/.bin/jest $@ --verbose --runInBand
