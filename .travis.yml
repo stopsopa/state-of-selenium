@@ -32,7 +32,7 @@ script:
 #  - rm -rf test/examples/__*
 #  - node driver.js
   - echo "$PLATFORM $BROWSER $VERSION"
-  - node node_modules/.bin/jest --verbose --runInBand
+  - node node_modules/.bin/jest --verbose --runInBand --modulePathIgnorePatterns "test/project"
 #  - node node_modules/.bin/jest --verbose --runInBand test/examples/006
 #  - node node_modules/.bin/jest --verbose --runInBand test/examples/008 -t "subscribed to wrong event"
 
