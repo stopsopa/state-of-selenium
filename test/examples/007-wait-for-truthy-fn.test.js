@@ -24,18 +24,18 @@ describe('ng-calc', async () => {
 
         // try {
 
-        var json = await driver.waitForJs(data => {
+            var json = await driver.waitForJs(data => {
 
-            const test = document.querySelectorAll('li').length > 3;
+                const test = document.querySelectorAll('li').length > 3;
 
-            if (test) {
+                if (test) {
 
-                data.result = test ? 'true' : 'false';
+                    data.result = test ? 'true' : 'false';
 
-                return data
-            }
+                    return data
+                }
 
-        }, {}, 300);
+            }, {}, 300);
         // }
         // catch (e) {
         //

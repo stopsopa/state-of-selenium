@@ -19,15 +19,21 @@ const log               = require('./lib/logn');
 // log.dump(TRAVIS)
 
 const config = {
-    width: 1024,
-    height: 768,
+    width: 1920, //1024,
+    height: 1080, //768,
     hub: {
         host: "localhost", // http://localhost:4445/grid/console?config=true&configDebug=true&refresh=10
         port: 4444
     },
     node: {
-        host: "127.0.0.1",
-        port: 5555
+        host: "localhost",
+        port: 5555,
+    },
+    browser: {
+        browserName: 'chrome',
+        platform: 'macOS 10.12', // java.lang.IllegalArgumentException: No enum constant org.openqa.selenium.Platform.macOS1012
+        version: '65.0',
+        maxInstances: '10'
     },
     waitToRunSeleniumCluster: 8, // sec
     curlTestMaxTime: 1, // sec

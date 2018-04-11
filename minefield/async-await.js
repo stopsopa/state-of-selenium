@@ -1,3 +1,6 @@
+/**
+ * https://youtu.be/NoRYn6gOtVo?t=26m10s
+ */
 
 const time = () => (new Date()).toISOString().substring(0, 19).replace('T', ' ');
 const log = function (...args) {
@@ -60,6 +63,24 @@ async function teste () {
 
     log('test:', test)
 }());
+
+
+(function () {
+    const list = ['one', 'two', 'three'];
+    const test = async () => {
+        let tmp;
+        while (tmp = list.shift()) {
+
+            const val = await new Promise(res => setTimeout(res, 1000, tmp));
+
+            console.log('val', val)
+        }
+
+        console.log('end...')
+    }
+    test();
+}())
+
 
 // 2018-03-13 23:18:18 one promise resolved: 1
 // 2018-03-13 23:18:20 two promise resolved: 2
