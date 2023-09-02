@@ -7,6 +7,11 @@
 |[macOS Sierra](https://github.com/stopsopa/state-of-selenium/blob/chrome-macsi/.travis.yml#L11)|Chrome|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-macsi)](https://travis-ci.org/stopsopa/state-of-selenium)|
 |[Windows 10](https://github.com/stopsopa/state-of-selenium/blob/chrome-win10/.travis.yml#L11)|Chrome|[![Build Status](https://travis-ci.org/stopsopa/state-of-selenium.svg?branch=chrome-win10)](https://travis-ci.org/stopsopa/state-of-selenium)|
 
+# DEPRECATED
+Created in 2018 - quite old now and not maintained.
+
+Brr, I have goosebumps when I look at this now (Sep 2023)
+
 # how to use
 
     yarn install
